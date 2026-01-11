@@ -492,7 +492,7 @@
     <string name="theme_settings_title">Theme</string>
     
     <!-- Font settings -->
-    <string name="font_settings_title">🔤 Fonts</string>
+    <string name="font_settings_title">Fonts</string>
     
     <!-- Theme names -->
     <string name="ivory_turquoise_theme_name">Ivory Turquoise</string>

@@ -60,6 +60,8 @@ import org.futo.inputmethod.latin.uix.settings.renderAnimated
 import org.futo.inputmethod.latin.uix.settings.pages.IS_ALREADY_PAID
 import org.futo.inputmethod.latin.uix.settings.pages.IS_DEVELOPER
 import org.futo.inputmethod.latin.uix.settings.pages.ConditionalUnpaidNoticeWithNav
+import org.futo.inputmethod.latin.uix.settings.pages.PredictiveTextMenu
+import org.futo.inputmethod.latin.uix.settings.pages.VoiceInputMenu
 import org.futo.inputmethod.updates.ConditionalMigrateUpdateNotice
 import org.futo.inputmethod.updates.openManualUpdateCheck
 
