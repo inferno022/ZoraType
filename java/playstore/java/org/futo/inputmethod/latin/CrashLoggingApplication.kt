@@ -13,11 +13,11 @@ class CrashLoggingApplication : Application() /*, Configuration.Provider*/ {
 
     companion object {
         fun logPreferences(preferences: Preferences) {
-
+            // TODO: Implement logging
         }
 
-        fun CopyLogsOption() {
-
+        fun copyLogsOption() {
+            // TODO: Implement copy logs option
         }
     }
 
