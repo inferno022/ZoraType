@@ -1,3 +1,7 @@
+# GitLab CI/CD Configuration for ZoraText
+# ⚠️  MIGRATION NOTICE: Consider migrating to GitHub Actions for better Android support
+# See CI_CD_SETUP.md for complete migration guide with free builds and Play Store deployment
+
 default:
   image: "gradle:8.14.3-jdk17"
 
@@ -11,8 +15,25 @@ variables:
   ANDROID_SDK_TOOLS: "9477386"
 
 stages:
+  - migration_notice
   - build
   - test
+
+# Migration Notice Job
+migration_notice:
+  stage: migration_notice
+  script:
+    - echo "🚀 MIGRATION RECOMMENDATION 🚀"
+    - echo "Consider migrating to GitHub Actions for:"
+    - echo "✅ FREE unlimited builds (vs paid GitLab CI)"
+    - echo "✅ Better Android/Gradle support"
+    - echo "✅ Automatic Google Play Store deployment"
+    - echo "✅ Faster build times (3-6 minutes vs 5-10 minutes)"
+    - echo "✅ Better artifact management"
+    - echo ""
+    - echo "📋 Migration guide available in CI_CD_SETUP.md"
+    - echo "🔗 GitHub Actions workflows already configured in .github/workflows/"
+  allow_failure: true
 
 before_script:
   - apt-get --quiet update --yes
@@ -26,41 +47,57 @@ before_script:
   - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
   - chmod +x ./gradlew
 
-build_zoratype_debug:
+build_zoratext_debug:
   stage: build
   script:
-    - ./gradlew assembleUnstableDebug
+    - echo "Building ZoraText debug APK..."
+    - ./gradlew assembleUnstableDebug --stacktrace
   artifacts:
-    name: "zoratype-debug-$CI_COMMIT_SHORT_SHA"
+    name: "zoratext-debug-$CI_COMMIT_SHORT_SHA"
     paths:
       - build/outputs/apk/unstable/debug/*.apk
     expire_in: 1 week
+  only:
+    - master
+    - main
+    - develop
 
-build_zoratype_playstore_debug:
+build_zoratext_playstore_debug:
   stage: build
   script:
-    - ./gradlew assemblePlaystoreDebug
+    - echo "Building ZoraText playstore debug APK..."
+    - ./gradlew assemblePlaystoreDebug --stacktrace
   artifacts:
-    name: "zoratype-playstore-debug-$CI_COMMIT_SHORT_SHA"
+    name: "zoratext-playstore-debug-$CI_COMMIT_SHORT_SHA"
     paths:
       - build/outputs/apk/playstore/debug/*.apk
     expire_in: 1 week
+  only:
+    - master
+    - main
+    - develop
 
-build_zoratype_release:
+build_zoratext_release:
   stage: build
   script:
-    - ./gradlew assembleStableRelease
+    - echo "⚠️  For production releases, consider GitHub Actions with automatic Play Store deployment"
+    - echo "Building ZoraText release APK..."
+    - ./gradlew assembleStableRelease --stacktrace
   artifacts:
-    name: "zoratype-release-$CI_COMMIT_SHORT_SHA"
+    name: "zoratext-release-$CI_COMMIT_SHORT_SHA"
     paths:
       - build/outputs/apk/stable/release/*.apk
     expire_in: 1 month
+  only:
+    - tags
   when: manual
 
-test_zoratype:
+test_zoratext:
   stage: test
   script:
-    - ./gradlew test
+    - echo "Running ZoraText unit tests..."
+    - ./gradlew test --stacktrace
   artifacts:
     reports:
       junit: build/test-results/test/TEST-*.xml
+  coverage: '/Total.*?([0-9]{1,3})%/'
