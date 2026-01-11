@@ -128,7 +128,7 @@ val IvoryTurquoise = ThemeOption(
     name = R.string.ivory_turquoise_theme_name,
     available = { true }
 ) {
-    IvoryTurquoiseLightScheme to IvoryTurquoiseDarkScheme
+    IvoryTurquoiseLightScheme
 }
 
 @Composable

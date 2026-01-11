@@ -128,7 +128,7 @@ val ModernMint = ThemeOption(
     name = R.string.modern_mint_theme_name,
     available = { true }
 ) {
-    ModernMintLightScheme to ModernMintDarkScheme
+    ModernMintLightScheme
 }
 
 @Composable

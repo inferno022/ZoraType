@@ -128,7 +128,7 @@ val CyberViolet = ThemeOption(
     name = R.string.cyber_violet_theme_name,
     available = { true }
 ) {
-    CyberVioletLightScheme to CyberVioletDarkScheme
+    CyberVioletLightScheme
 }
 
 @Composable

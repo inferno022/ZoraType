@@ -128,7 +128,7 @@ val CherryGlaze = ThemeOption(
     name = R.string.cherry_glaze_theme_name,
     available = { true }
 ) {
-    CherryGlazeLightScheme to CherryGlazeDarkScheme
+    CherryGlazeLightScheme
 }
 
 @Composable
