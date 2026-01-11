@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import org.futo.inputmethod.latin.R
+import org.futo.inputmethod.latin.uix.wrapLightColorScheme
+import org.futo.inputmethod.latin.uix.wrapDarkColorScheme
 import org.futo.inputmethod.latin.uix.theme.ThemeOption
 import org.futo.inputmethod.latin.uix.theme.selector.ThemePreview
 
@@ -128,7 +130,7 @@ val IvoryTurquoise = ThemeOption(
     name = R.string.ivory_turquoise_theme_name,
     available = { true }
 ) {
-    IvoryTurquoiseLightScheme
+    wrapLightColorScheme(IvoryTurquoiseLightScheme)
 }
 
 @Composable
