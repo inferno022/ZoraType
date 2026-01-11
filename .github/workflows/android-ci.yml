@@ -35,8 +35,10 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x gradlew
       
-    - name: Build APK
-      run: ./gradlew clean assemblePlaystoreDebug --stacktrace --no-daemon
+    - name: Build Playstore APK Only
+      run: |
+        ./gradlew clean
+        ./gradlew :assemblePlaystoreDebug --no-daemon --stacktrace
       
     - name: Upload APK
       uses: actions/upload-artifact@v4
@@ -47,7 +49,6 @@ jobs:
   release:
     runs-on: ubuntu-latest
     if: github.event_name == 'release'
-    needs: build
     
     steps:
     - name: Checkout
@@ -65,7 +66,9 @@ jobs:
       run: chmod +x gradlew
       
     - name: Build Release APK
-      run: ./gradlew clean assemblePlaystoreDebug --stacktrace --no-daemon
+      run: |
+        ./gradlew clean
+        ./gradlew :assemblePlaystoreDebug --no-daemon --stacktrace
         
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
@@ -75,18 +78,21 @@ jobs:
         body: |
           ## ZoraText Professional Edition ${{ github.event.release.tag_name }}
           
-          ### Features:
-          - ✅ Fonts button visible on home screen
-          - ✅ Font import functionality
-          - ✅ Professional themes (Mango Sunset, Berry Bliss)
-          - ✅ Google Pay QR code integration
-          - ✅ Complete ZoraText branding
+          ### ✅ Features:
+          - **Fonts Button**: Visible on home screen with import functionality
+          - **Professional Themes**: Mango Sunset, Berry Bliss, Modern Mint, Cyber Violet
+          - **Google Pay QR**: Integrated donation system
+          - **Complete ZoraText Branding**: Throughout the app
           
-          ### Installation:
+          ### 📱 Installation:
           1. Download the APK below
-          2. Enable "Install from Unknown Sources" 
-          3. Install and enjoy!
+          2. Enable "Install from Unknown Sources" in Android settings
+          3. Install and enjoy ZoraText!
           
-          **Support:** mail.zoratext@gmail.com
+          ### 📧 Support:
+          **Email:** mail.zoratext@gmail.com
+          
+          ---
+          *Professional keyboard with advanced theming and font customization*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
