@@ -267,21 +267,18 @@ android {
     flavorDimensions = ["buildType"]
 
     productFlavors {
-        // Disable unstable variant in CI to avoid compilation issues
-        if (System.getenv("GITHUB_ACTIONS") == null) {
-            unstable {
-                dimension "buildType"
-                applicationIdSuffix ".unstable"
-                versionNameSuffix "-unstable"
+        unstable {
+            dimension "buildType"
+            applicationIdSuffix ".unstable"
+            versionNameSuffix "-unstable"
 
-                buildConfigField "boolean", "IS_PLAYSTORE_BUILD", "false"
-                buildConfigField "boolean", "UPDATE_CHECKING", "true"
-                buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
-                buildConfigField "String", "BRANCH", "\"${getBranch()}\""
-                getIsDefault().set(true)
+            buildConfigField "boolean", "IS_PLAYSTORE_BUILD", "false"
+            buildConfigField "boolean", "UPDATE_CHECKING", "true"
+            buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
+            buildConfigField "String", "BRANCH", "\"${getBranch()}\""
+            getIsDefault().set(true)
 
-                buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
-            }
+            buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
         }
 
         stable {
@@ -305,11 +302,6 @@ android {
             buildConfigField "String", "BRANCH", "\"${getBranch()}\""
 
             buildConfigField "String", "PAYMENT_PRICE", "GOOGLEPAY_PRICE"
-            
-            // Set as default in CI
-            if (System.getenv("GITHUB_ACTIONS") != null) {
-                getIsDefault().set(true)
-            }
         }
     }
 
