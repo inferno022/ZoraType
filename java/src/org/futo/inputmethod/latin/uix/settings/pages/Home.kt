@@ -118,14 +118,14 @@ val HomeScreenLite = UserSettingsMenu(
 
         userSettingNavigationItem(
             title = R.string.theme_settings_title,
-            style = NavigationItemStyle.HomeTertiary,
+            style = NavigationItemStyle.HomePrimary,
             navigateTo = "themes",
             icon = R.drawable.themes
         ),
 
         userSettingNavigationItem(
             title = R.string.font_settings_title,
-            style = NavigationItemStyle.HomeSecondary,
+            style = NavigationItemStyle.HomePrimary,
             navigateTo = "fonts",
             icon = R.drawable.type
         ),
