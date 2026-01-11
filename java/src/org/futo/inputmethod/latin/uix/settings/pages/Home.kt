@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -227,7 +228,7 @@ fun HomeHeader(navController: NavHostController) {
             )
             Text(
                 text = "Professional. Seamless. Minimalist.",
-                style = Typography.Body.Large.copy(
+                style = Typography.Body.MediumMl.copy(
                     fontSize = 16.sp,
                     letterSpacing = 0.5.sp
                 ),
@@ -331,7 +332,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 stringResource(R.string.settings_try_typing_here), 
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold,
-                style = Typography.Body.Large
+                style = Typography.Body.MediumMl
             )
         }
     }
