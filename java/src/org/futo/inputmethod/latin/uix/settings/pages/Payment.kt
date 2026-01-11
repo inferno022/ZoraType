@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,6 +43,7 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -53,6 +55,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -434,6 +437,52 @@ private fun ActionsColumn(content: @Composable ColumnScope.() -> Unit) =
 
 
 @Composable
+fun GooglePayQRDialog(onDismiss: () -> Unit) {
+    Dialog(onDismissRequest = onDismiss) {
+        Surface(
+            shape = RoundedCornerShape(16.dp),
+            color = MaterialTheme.colorScheme.surface,
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Scan to Donate via Google Pay",
+                    style = Typography.Body.MediumMl,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+                
+                Image(
+                    painter = painterResource(id = R.drawable.googlepay_qr),
+                    contentDescription = "Google Pay QR Code",
+                    modifier = Modifier
+                        .size(250.dp)
+                        .padding(8.dp),
+                    contentScale = ContentScale.Fit
+                )
+                
+                Text(
+                    text = "Scan this QR code with any UPI app to donate",
+                    style = Typography.SmallMl,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
+                )
+                
+                Button(
+                    onClick = onDismiss,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Close")
+                }
+            }
+        }
+    }
+}
+
+@Composable
 @Preview(showBackground = true, heightDp = 2048)
 fun PaymentScreen(
     navController: NavHostController = rememberNavController(),
@@ -450,6 +499,12 @@ fun PaymentScreen(
     val currentTime = System.currentTimeMillis() / 1000L
 
     val reminderTimeIsUp = (currentTime >= pushReminderTime.value) && ((numDaysInstalled.intValue >= TRIAL_PERIOD_DAYS) || forceShowNotice.value)
+    
+    val showGooglePayQR = remember { mutableStateOf(false) }
+
+    if (showGooglePayQR.value) {
+        GooglePayQRDialog(onDismiss = { showGooglePayQR.value = false })
+    }
 
     ScrollableList {
         ScreenTitle(stringResource(R.string.payment_screen_short_title), showBack = true, navController = navController)
@@ -477,7 +532,7 @@ fun PaymentScreen(
 
                 if(BuildConfig.IS_PLAYSTORE_BUILD) {
                     Button(
-                        onClick = { context.openURI(BuildConfig.GOOGLEPAY_URL) },
+                        onClick = { showGooglePayQR.value = true },
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 44.dp)
@@ -506,6 +561,20 @@ fun PaymentScreen(
                         )
                     }
                 } else {
+                    // Show QR code option for non-playstore builds too
+                    Button(
+                        onClick = { showGooglePayQR.value = true },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 44.dp)
+                    ) {
+
+                        Text(
+                            "Donate via QR Code (${BuildConfig.GOOGLEPAY_PRICE})",
+                            style = Typography.Body.Medium
+                        )
+                    }
+                    
                     Button(
                         onClick = { context.openURI(BuildConfig.FUTOPAY_URL) },
                         modifier = Modifier
