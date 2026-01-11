@@ -2,6 +2,7 @@ package org.futo.inputmethod.latin
 
 import android.app.Application
 import android.content.Context
+import androidx.compose.runtime.Composable
 import androidx.datastore.preferences.core.Preferences
 import androidx.core.content.edit
 //import androidx.work.Configuration
@@ -16,7 +17,8 @@ class CrashLoggingApplication : Application() /*, Configuration.Provider*/ {
             // TODO: Implement logging
         }
 
-        fun copyLogsOption() {
+        @Composable
+        fun CopyLogsOption() {
             // TODO: Implement copy logs option
         }
     }

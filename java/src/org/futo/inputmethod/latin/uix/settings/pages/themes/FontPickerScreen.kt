@@ -15,14 +15,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.futo.inputmethod.latin.R
 import org.futo.inputmethod.latin.uix.KEYBOARD_FONT_KEY
 import org.futo.inputmethod.latin.uix.setSetting
@@ -52,9 +52,7 @@ fun FontPickerScreen(navController: NavHostController) {
                     fileName = "",
                     isSelected = currentFont == "",
                     onClick = {
-                        navController.lifecycleScope.launch {
-                            context.setSetting(KEYBOARD_FONT_KEY, "")
-                        }
+                        runBlocking { context.setSetting(KEYBOARD_FONT_KEY, "") }
                     }
                 )
 
@@ -64,9 +62,7 @@ fun FontPickerScreen(navController: NavHostController) {
                         fileName = fontFile,
                         isSelected = currentFont == fontFile,
                         onClick = {
-                            navController.lifecycleScope.launch {
-                                context.setSetting(KEYBOARD_FONT_KEY, fontFile)
-                            }
+                            runBlocking { context.setSetting(KEYBOARD_FONT_KEY, fontFile) }
                         }
                     )
                 }
@@ -96,7 +92,7 @@ private fun FontItem(name: String, fileName: String, isSelected: Boolean, onClic
             RadioButton(selected = isSelected, onClick = null)
         },
         modifier = Modifier.clearAndSetSemantics {
-            this.text = AnnotatedString(name)
+            this.contentDescription = name
             this.role = Role.RadioButton
             this.selected = isSelected
         }

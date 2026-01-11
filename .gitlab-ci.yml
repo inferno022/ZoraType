@@ -36,6 +36,16 @@ build_zoratype_debug:
       - build/outputs/apk/unstable/debug/*.apk
     expire_in: 1 week
 
+build_zoratype_playstore_debug:
+  stage: build
+  script:
+    - ./gradlew assemblePlaystoreDebug
+  artifacts:
+    name: "zoratype-playstore-debug-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - build/outputs/apk/playstore/debug/*.apk
+    expire_in: 1 week
+
 build_zoratype_release:
   stage: build
   script:
