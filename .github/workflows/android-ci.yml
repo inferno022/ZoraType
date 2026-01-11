@@ -1,102 +1,73 @@
-name: ZoraText Android Build
+name: ZoraText Build
 
 on:
   push:
     branches: [ master, main ]
-  pull_request:
-    branches: [ master, main ]
   release:
     types: [published]
-
-env:
-  GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2
-  CI: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build ZoraText APK
     
     steps:
-    - name: Checkout Repository
+    - name: Checkout
       uses: actions/checkout@v4
       with:
         submodules: recursive
     
-    - name: Set up JDK 17
+    - name: Setup JDK 17
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
         
-    - name: Cache Gradle Dependencies
+    - name: Cache Gradle
       uses: actions/cache@v4
       with:
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
           
     - name: Make gradlew executable
       run: chmod +x gradlew
       
-    - name: Build Only Playstore Debug APK
-      run: |
-        ./gradlew clean
-        ./gradlew assemblePlaystoreDebug -x assembleUnstableDebug -x assembleStableDebug -x test -x lint -x lintVitalPlaystoreDebug --stacktrace --no-configuration-cache
+    - name: Build APK
+      run: ./gradlew clean assemblePlaystoreDebug --stacktrace --no-daemon
       
-    - name: Upload Debug APK
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: zoratext-debug-${{ github.sha }}
+        name: zoratext-apk
         path: build/outputs/apk/playstore/debug/*.apk
-        retention-days: 30
 
   release:
     runs-on: ubuntu-latest
     if: github.event_name == 'release'
-    name: Create Release Build
+    needs: build
     
     steps:
-    - name: Checkout Repository
+    - name: Checkout
       uses: actions/checkout@v4
       with:
         submodules: recursive
     
-    - name: Set up JDK 17
+    - name: Setup JDK 17
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
         
-    - name: Cache Gradle Dependencies
-      uses: actions/cache@v4
-      with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
-          
     - name: Make gradlew executable
       run: chmod +x gradlew
       
-    - name: Build Only Playstore Release APK
-      run: |
-        ./gradlew clean
-        ./gradlew assemblePlaystoreDebug -x assembleUnstableDebug -x assembleStableDebug -x test -x lint -x lintVitalPlaystoreDebug --stacktrace --no-configuration-cache
-      
-    - name: Upload Release APK to Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: zoratext-release-${{ github.event.release.tag_name }}
-        path: build/outputs/apk/playstore/debug/*.apk
-        retention-days: 90
+    - name: Build Release APK
+      run: ./gradlew clean assemblePlaystoreDebug --stacktrace --no-daemon
         
-    - name: Upload APK to GitHub Release
+    - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
         files: build/outputs/apk/playstore/debug/*.apk
@@ -104,20 +75,18 @@ jobs:
         body: |
           ## ZoraText Professional Edition ${{ github.event.release.tag_name }}
           
-          ### What's New:
-          - ✅ Fonts button now visible on home screen
-          - ✅ Professional theme names (Mango Sunset, Berry Bliss)
-          - ✅ Font import functionality with + button
+          ### Features:
+          - ✅ Fonts button visible on home screen
+          - ✅ Font import functionality
+          - ✅ Professional themes (Mango Sunset, Berry Bliss)
           - ✅ Google Pay QR code integration
           - ✅ Complete ZoraText branding
           
-          ### Download:
-          - Download the APK file below
-          - Enable "Install from Unknown Sources" in Android settings
-          - Install and enjoy ZoraText!
+          ### Installation:
+          1. Download the APK below
+          2. Enable "Install from Unknown Sources" 
+          3. Install and enjoy!
           
-          ### Support:
-          - Email: mail.zoratext@gmail.com
-          - Donate via Google Pay QR code in the app
+          **Support:** mail.zoratext@gmail.com
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

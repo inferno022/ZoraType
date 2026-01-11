@@ -276,11 +276,7 @@ android {
             buildConfigField "boolean", "UPDATE_CHECKING", "true"
             buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
             buildConfigField "String", "BRANCH", "\"${getBranch()}\""
-            
-            // Only set as default if not in CI environment
-            if (System.getenv("CI") == null) {
-                getIsDefault().set(true)
-            }
+            getIsDefault().set(true)
 
             buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
         }
@@ -306,11 +302,6 @@ android {
             buildConfigField "String", "BRANCH", "\"${getBranch()}\""
 
             buildConfigField "String", "PAYMENT_PRICE", "GOOGLEPAY_PRICE"
-            
-            // Set as default in CI environment
-            if (System.getenv("CI") != null) {
-                getIsDefault().set(true)
-            }
         }
     }
 
