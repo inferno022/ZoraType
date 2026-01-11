@@ -1,7 +1,7 @@
 {
-    "name": "zoratext-android-keyboard",
+    "name": "zoratype-android-keyboard",
     "version": "1.0.0",
-    "description": "Professional Android Keyboard with Custom Fonts and Smooth Haptics",
+    "description": "ZoraType - Professional Android Keyboard with Custom Fonts and Smooth Haptics",
     "scripts": {
         "build": "./gradlew assembleRelease",
         "test": "./gradlew test"

@@ -1,8 +1,16 @@
-# FUTO Keyboard
+# ZoraType Keyboard
 
-The goal is to make a good modern keyboard that stays offline and doesn't spy on you. This keyboard is a fork of [LatinIME, The Android Open-Source Keyboard](https://android.googlesource.com/platform/packages/inputmethods/LatinIME), with significant changes made to it.
+ZoraType is a professional Android keyboard with custom fonts and smooth haptics. Built on the foundation of FUTO Keyboard (a fork of LatinIME), ZoraType focuses on providing an exceptional typing experience with enhanced customization options.
 
-Check out the [FUTO Keyboard website](https://keyboard.futo.org/) for downloads and more information.
+## Features
+
+- **Custom Fonts**: Support for various font styles and typography
+- **Smooth Haptics**: Enhanced tactile feedback for better typing experience  
+- **Professional Design**: Clean, modern interface optimized for productivity
+- **Privacy-Focused**: Stays offline and doesn't spy on you
+- **Highly Customizable**: Extensive theming and layout options
+
+Check out the [FUTO Keyboard website](https://keyboard.futo.org/) for more information about the underlying technology.
 
 The code is licensed under the [FUTO Source First License 1.1](LICENSE.md).
 
