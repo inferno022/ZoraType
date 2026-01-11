@@ -8,6 +8,10 @@ on:
   release:
     types: [published]
 
+env:
+  GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2
+  CI: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,10 +42,10 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x gradlew
       
-    - name: Build Playstore Debug APK Only
+    - name: Build Only Playstore Debug APK
       run: |
         ./gradlew clean
-        ./gradlew :assemblePlaystoreDebug -x test -x lint -x lintVitalPlaystoreDebug --no-daemon --stacktrace
+        ./gradlew assemblePlaystoreDebug -x assembleUnstableDebug -x assembleStableDebug -x test -x lint -x lintVitalPlaystoreDebug --stacktrace --no-configuration-cache
       
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
@@ -80,10 +84,10 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x gradlew
       
-    - name: Build Playstore Release APK Only
+    - name: Build Only Playstore Release APK
       run: |
         ./gradlew clean
-        ./gradlew :assemblePlaystoreDebug -x test -x lint -x lintVitalPlaystoreDebug --no-daemon --stacktrace
+        ./gradlew assemblePlaystoreDebug -x assembleUnstableDebug -x assembleStableDebug -x test -x lint -x lintVitalPlaystoreDebug --stacktrace --no-configuration-cache
       
     - name: Upload Release APK to Artifacts
       uses: actions/upload-artifact@v4
