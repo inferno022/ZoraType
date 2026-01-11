@@ -57,6 +57,9 @@ import org.futo.inputmethod.latin.uix.settings.useDataStoreValue
 import org.futo.inputmethod.latin.uix.settings.userSettingNavigationItem
 import org.futo.inputmethod.latin.uix.theme.Typography
 import org.futo.inputmethod.latin.uix.settings.renderAnimated
+import org.futo.inputmethod.latin.uix.settings.pages.IS_ALREADY_PAID
+import org.futo.inputmethod.latin.uix.settings.pages.IS_DEVELOPER
+import org.futo.inputmethod.latin.uix.settings.pages.ConditionalUnpaidNoticeWithNav
 import org.futo.inputmethod.updates.ConditionalMigrateUpdateNotice
 import org.futo.inputmethod.updates.openManualUpdateCheck
 
@@ -124,7 +127,7 @@ val HomeScreenLite = UserSettingsMenu(
             title = R.string.font_settings_title,
             style = NavigationItemStyle.HomeSecondary,
             navigateTo = "fonts",
-            icon = R.drawable.text_fields
+            icon = R.drawable.type
         ),
 
         //if(!isPaid) {
