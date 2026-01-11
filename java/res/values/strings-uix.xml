@@ -144,10 +144,10 @@
     <string name="theme_default_light">Light Mode</string>
     <string name="theme_amoled_dark">AMOLED Dark Purple</string>
     <string name="theme_catppuccin_mocha">Catppuccin Mocha</string>
-    <string name="theme_zoratext_premium">ZoraText Premium</string>
+    <string name="theme_zoratext_premium">Mango Sunset</string>
     <string name="theme_classic_dark">AOSP Material Dark</string>
     <string name="theme_classic_light">AOSP Material Light</string>
-    <string name="theme_vi">ZoraText VI Theme</string>
+    <string name="theme_vi">Berry Bliss</string>
     <string name="theme_deepsea_dark">Deep Sea Dark</string>
     <string name="theme_deepsea_light">Deep Sea Light</string>
     <string name="theme_emerald">Emerald</string>
@@ -492,7 +492,7 @@
     <string name="theme_settings_title">Theme</string>
     
     <!-- Font settings -->
-    <string name="font_settings_title">Fonts</string>
+    <string name="font_settings_title">🔤 Fonts</string>
     
     <!-- Theme names -->
     <string name="ivory_turquoise_theme_name">Ivory Turquoise</string>
