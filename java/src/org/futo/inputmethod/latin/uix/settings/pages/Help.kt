@@ -134,7 +134,7 @@ val HelpMenu = UserSettingsMenu(
             subtitle = R.string.help_menu_email_subtitle,
             style = NavigationItemStyle.Mail,
             navigate = { nav ->
-                nav.context.openURI("mailto:keyboard@futo.org")
+                nav.context.openURI("mailto:support@zoratext.org")
             }
         ).copy(searchTags = R.string.help_menu_email_tags),
     )

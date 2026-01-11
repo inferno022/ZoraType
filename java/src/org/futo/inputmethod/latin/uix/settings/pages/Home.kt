@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -119,6 +120,13 @@ val HomeScreenLite = UserSettingsMenu(
             icon = R.drawable.themes
         ),
 
+        userSettingNavigationItem(
+            title = R.string.font_settings_title,
+            style = NavigationItemStyle.HomeSecondary,
+            navigateTo = "fonts",
+            icon = R.drawable.text_fields
+        ),
+
         //if(!isPaid) {
         userSettingNavigationItem(
             title = R.string.payment_screen_short_title,
@@ -167,50 +175,81 @@ fun HomeHeader(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(260.dp)
+            .height(280.dp)
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f),
+                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
                         MaterialTheme.colorScheme.surface.copy(alpha = 0.0f)
                     )
                 )
             )
-            .padding(horizontal = 24.dp, vertical = 24.dp)
+            .padding(horizontal = 32.dp, vertical = 32.dp)
     ) {
         Column(modifier = Modifier.align(Alignment.BottomStart)) {
-            Image(
-                painter = painterResource(id = R.drawable.zoratext_logo),
-                contentDescription = null,
+            Box(
                 modifier = Modifier
-                    .size(80.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .shadow(12.dp, RoundedCornerShape(20.dp))
-            )
-            Spacer(modifier = Modifier.height(20.dp))
+                    .size(96.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(
+                        brush = Brush.radialGradient(
+                            colors = listOf(
+                                MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+                                MaterialTheme.colorScheme.surface.copy(alpha = 0.7f)
+                            )
+                        )
+                    )
+                    .shadow(16.dp, RoundedCornerShape(24.dp))
+                    .padding(8.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.zoratext_logo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(16.dp))
+                )
+            }
+            Spacer(modifier = Modifier.height(24.dp))
             Text(
                 text = "ZoraText",
-                style = Typography.Heading.ExtraLarge,
+                style = Typography.Heading.ExtraLarge.copy(
+                    fontSize = 36.sp,
+                    letterSpacing = (-1.5).sp
+                ),
                 color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = (-1).sp
+                fontWeight = FontWeight.ExtraBold
             )
             Text(
                 text = "Professional. Seamless. Minimalist.",
-                style = Typography.Body.Medium,
-                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                style = Typography.Body.Large.copy(
+                    fontSize = 16.sp,
+                    letterSpacing = 0.5.sp
+                ),
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.9f),
                 fontWeight = FontWeight.Medium
             )
         }
 
-        IconButton(
-            onClick = { navController.navigate("search") },
+        Box(
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(top = 8.dp)
-                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
+                .padding(top = 16.dp)
+                .size(48.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .background(
+                    MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
+                )
+                .clickable { navController.navigate("search") }
         ) {
-            Icon(Icons.Default.Search, contentDescription = "Search", tint = MaterialTheme.colorScheme.onSurface)
+            Icon(
+                Icons.Default.Search, 
+                contentDescription = "Search", 
+                tint = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .size(24.dp)
+            )
         }
     }
 }
@@ -271,13 +310,23 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             }, 
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
-                .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.2f), RoundedCornerShape(12.dp))
+                .padding(horizontal = 24.dp, vertical = 16.dp)
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
+                            MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.2f)
+                        )
+                    ),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .padding(vertical = 8.dp)
         ) {
             Text(
                 stringResource(R.string.settings_try_typing_here), 
                 color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                style = Typography.Body.Large
             )
         }
     }

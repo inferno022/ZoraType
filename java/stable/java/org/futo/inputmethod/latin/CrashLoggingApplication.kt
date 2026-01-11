@@ -83,7 +83,7 @@ class CrashLoggingApplication : Application() /*, Configuration.Provider*/ {
                 //    }
                 //} else {
                 mailSender {
-                    mailTo = "keyboard@futo.org"
+                    mailTo = "support@zoratext.org"
                     reportAsFile = true
                     reportFileName = "Crash.txt"
                     subject = "Keyboard Crash Report"

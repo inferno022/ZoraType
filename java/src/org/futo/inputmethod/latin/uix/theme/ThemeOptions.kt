@@ -8,9 +8,11 @@ import org.futo.inputmethod.latin.uix.actions.BugInfo
 import org.futo.inputmethod.latin.uix.actions.BugViewerState
 import org.futo.inputmethod.latin.uix.theme.presets.AMOLEDDarkPurple
 import org.futo.inputmethod.latin.uix.theme.presets.CatppuccinMocha
+import org.futo.inputmethod.latin.uix.theme.presets.CherryGlaze
 import org.futo.inputmethod.latin.uix.theme.presets.ClassicMaterialDark
 import org.futo.inputmethod.latin.uix.theme.presets.ClassicMaterialLight
 import org.futo.inputmethod.latin.uix.theme.presets.CottonCandy
+import org.futo.inputmethod.latin.uix.theme.presets.CyberViolet
 import org.futo.inputmethod.latin.uix.theme.presets.DeepSeaDark
 import org.futo.inputmethod.latin.uix.theme.presets.DeepSeaLight
 import org.futo.inputmethod.latin.uix.theme.presets.DefaultDarkScheme
@@ -20,13 +22,15 @@ import org.futo.inputmethod.latin.uix.theme.presets.DynamicLightTheme
 import org.futo.inputmethod.latin.uix.theme.presets.DynamicSystemTheme
 import org.futo.inputmethod.latin.uix.theme.presets.Emerald
 import org.futo.inputmethod.latin.uix.theme.presets.Gradient1
+import org.futo.inputmethod.latin.uix.theme.presets.HighContrastYellow
 import org.futo.inputmethod.latin.uix.theme.presets.HotDog
+import org.futo.inputmethod.latin.uix.theme.presets.IvoryTurquoise
+import org.futo.inputmethod.latin.uix.theme.presets.ModernMint
 import org.futo.inputmethod.latin.uix.theme.presets.Snowfall
 import org.futo.inputmethod.latin.uix.theme.presets.SteelGray
 import org.futo.inputmethod.latin.uix.theme.presets.Sunflower
 import org.futo.inputmethod.latin.uix.theme.presets.VoiceInputTheme
 import org.futo.inputmethod.latin.uix.theme.presets.DevTheme
-import org.futo.inputmethod.latin.uix.theme.presets.HighContrastYellow
 import org.futo.inputmethod.latin.uix.theme.presets.ZoraTextPremium
 
 data class ThemeOption(
@@ -49,6 +53,12 @@ val ThemeOptions = mapOf(
     ClassicMaterialDark.key to ClassicMaterialDark,
     ClassicMaterialLight.key to ClassicMaterialLight,
     AMOLEDDarkPurple.key to AMOLEDDarkPurple,
+
+    // New ZoraText themes
+    IvoryTurquoise.key to IvoryTurquoise,
+    CherryGlaze.key to CherryGlaze,
+    ModernMint.key to ModernMint,
+    CyberViolet.key to CyberViolet,
 
     Sunflower.key to Sunflower,
     Snowfall.key to Snowfall,

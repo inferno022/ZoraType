@@ -256,10 +256,10 @@ android {
             it.buildConfigField "String", "ACRA_USER", "\"${acraUser}\""
             it.buildConfigField "String", "ACRA_PASSWORD", "\"${acraPassword}\""
 
-            it.buildConfigField "String", "FUTOPAY_URL", "\"https://pay.futo.org/api/PaymentPortal?product=voiceinput&success=zoratext-keyboard%3a%2f%2flicense%2factivate\""
+            it.buildConfigField "String", "FUTOPAY_URL", "\"https://pay.zoratext.org/api/PaymentPortal?product=voiceinput&success=zoratext-keyboard%3a%2f%2flicense%2factivate\""
             it.buildConfigField "String", "FUTOPAY_PRICE", "\"~\$6.99\""
 
-            it.buildConfigField "String", "GOOGLEPAY_URL", "\"https://play.google.com/store/apps/details?id=org.futo.keyboardpayment\""
+            it.buildConfigField "String", "GOOGLEPAY_URL", "\"https://play.google.com/store/apps/details?id=org.zoratext.keyboardpayment\""
             it.buildConfigField "String", "GOOGLEPAY_PRICE", "\"~\$11.99\""
         }
     }

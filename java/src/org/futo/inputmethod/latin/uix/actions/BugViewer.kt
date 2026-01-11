@@ -123,7 +123,7 @@ val BugViewerAction = Action(
                             }
 
                             TextButton(onClick = {
-                                manager.getContext().openURI("mailto:keyboard@futo.org", newTask = true)
+                                manager.getContext().openURI("mailto:support@zoratext.org", newTask = true)
                             }) {
                                 Text("Email us (include the copy)")
                             }

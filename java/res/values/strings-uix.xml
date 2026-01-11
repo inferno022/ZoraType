@@ -207,25 +207,25 @@
          into the keyboard, undocking it from above the keyboard. -->
     <string name="keyboard_actionbar_undock_action_window_collapse_into_keyboard_talkback">Collapse</string>
 
-    <!-- Payment screen -->
-    <string name="payment_screen_short_title">Payment</string>
-    <string name="payment_screen_title">Pay for ZoraText</string>
-    <string name="payment_screen_sales_paragraph_1">You\'ve been using ZoraText for <xliff:g name="days" example="30">%d</xliff:g> days. If you find this app useful, please consider paying to support future development of ZoraText software.</string>
-    <string name="payment_screen_sales_paragraph_1_alt">Thank you for trying out ZoraText! If you find this app useful, please consider paying to support future development of ZoraText software.</string>
+    <!-- Donation screen -->
+    <string name="payment_screen_short_title">Donate</string>
+    <string name="payment_screen_title">Support ZoraText</string>
+    <string name="payment_screen_sales_paragraph_1">You\'ve been using ZoraText for <xliff:g name="days" example="30">%d</xliff:g> days. If you find this app useful, please consider donating to support future development of ZoraText software.</string>
+    <string name="payment_screen_sales_paragraph_1_alt">Thank you for trying out ZoraText! If you find this app useful, please consider donating to support future development of ZoraText software.</string>
     <string name="payment_screen_sales_paragraph_2">ZoraText is dedicated to making good software that doesn\'t abuse you. This app will never serve you ads or collect your personal data.</string>
     <string name="payment_screen_sales_point_development_title">Sustainable Development</string>
-    <string name="payment_screen_sales_point_development_body">FUTO\'s mission is for open-source software and non-malicious software business practices to become a sustainable income source for projects and their developers. For this reason, we are in favor of users actually paying for software.</string>
+    <string name="payment_screen_sales_point_development_body">Our mission is for open-source software and ethical software business practices to become a sustainable income source for projects and their developers. For this reason, we appreciate users who support software development.</string>
     <string name="payment_screen_sales_point_privacy_title">Commitment to Privacy</string>
     <string name="payment_screen_sales_point_privacy_body">This app will never serve you ads or sell your data. We are not in the business of doing that.</string>
-    <string name="payment_screen_error_build_unsupported_payment">Payment is unsupported on this build</string>
-    <string name="payment_screen_already_paid_title">Already paid?</string>
-    <string name="payment_screen_already_paid_body">If you already paid for ZoraText or ZoraText Voice Input, tap below.</string>
-    <string name="payment_screen_already_paid_button">I already paid</string>
+    <string name="payment_screen_error_build_unsupported_payment">Donations are unsupported on this build</string>
+    <string name="payment_screen_already_paid_title">Already donated?</string>
+    <string name="payment_screen_already_paid_body">If you already donated to ZoraText or ZoraText Voice Input, tap below.</string>
+    <string name="payment_screen_already_paid_button">I already donated</string>
     <string name="payment_screen_already_paid_confirmation">Confirm your choice</string>
-    <string name="payment_screen_already_paid_confirmation_body">Are you sure you want to confirm you already paid? Once confirmed, you won\'t be asked about paying again.</string>
-    <string name="payment_screen_already_paid_confirmation_confirm">I already paid</string>
+    <string name="payment_screen_already_paid_confirmation_body">Are you sure you want to confirm you already donated? Once confirmed, you won\'t be asked about donating again.</string>
+    <string name="payment_screen_already_paid_confirmation_confirm">I already donated</string>
     <string name="payment_screen_already_paid_confirmation_cancel">Cancel</string>
-    <string name="payment_screen_set_reminder_title">Not ready to pay yet?</string>
+    <string name="payment_screen_set_reminder_title">Not ready to donate yet?</string>
     <string name="payment_screen_set_reminder_body">This will hide the reminder in the settings screen for the period of days entered.</string>
     <string name="payment_screen_set_reminder_setter">When would you like to be reminded?</string>
     <string name="payment_screen_set_reminder_setter_7_days">in 7 days</string>
@@ -237,27 +237,27 @@
     <string name="payment_screen_need_help_title">Help</string>
     <string name="payment_screen_need_help_subtitle">Need help? Visit our website</string>
 
-    <string name="payment_screen_pay_via_google">Pay via Google Play (<xliff:g name="price" example="~$2.99">%s</xliff:g> + tax)</string>
-    <string name="payment_screen_pay_via_futopay">Pay (<xliff:g name="price" example="~$2.99">%s</xliff:g> + tax)</string>
-    <string name="payment_screen_pay_via_futopay2">Pay via FUTO Pay (<xliff:g name="price" example="~$2.99">%s</xliff:g> + tax)</string>
+    <string name="payment_screen_pay_via_google">Donate via Google Play (<xliff:g name="price" example="~$2.99">%s</xliff:g> + tax)</string>
+    <string name="payment_screen_pay_via_futopay">Donate (<xliff:g name="price" example="~$2.99">%s</xliff:g> + tax)</string>
+    <string name="payment_screen_pay_via_futopay2">Donate via ZoraPay (<xliff:g name="price" example="~$2.99">%s</xliff:g> + tax)</string>
     <string name="payment_screen_more_options">More options</string>
 
-    <string name="payment_screen_payment_complete_title">Payment Complete</string>
+    <string name="payment_screen_payment_complete_title">Donation Complete</string>
     <string name="payment_screen_aftersales_title">Thank you</string>
-    <string name="payment_screen_aftersales_title_pending">Payment Pending</string>
-    <string name="payment_screen_aftersales_paragraph_1">Thank you for purchasing ZoraText!</string>
-    <string name="payment_screen_aftersales_paragraph_2">Your purchase will help continued development of ZoraText, and other ZoraText projects.</string>
-    <string name="payment_screen_aftersales_paragraph_2_pending">Your payment is still pending, but it should clear soon.</string>
-    <string name="payment_screen_aftersales_paragraph_3">If you just paid, your payment may still be processing, you should get an email with more information.</string>
-    <string name="payment_screen_payment_failed_title">Payment Error</string>
-    <string name="payment_screen_payment_failed_body">Unfortunately, your payment has failed for one reason or another. Please contact us if you need help. You can reach us at keyboard@futo.org, with the button below, or with Send Feedback in Help</string>
-    <string name="payment_screen_payment_failed_body_unconfident">There may have been a problem with your payment. If it did go through, you should receive an email with a license key. Please contact us if you need help. You can reach us at keyboard@futo.org, with the button below, or with Share Feedback at the main screen.</string>
-    <string name="payment_screen_license_integrity_error">Failed to verify license. If you believe this to be an error, please contact us.</string>
+    <string name="payment_screen_aftersales_title_pending">Donation Pending</string>
+    <string name="payment_screen_aftersales_paragraph_1">Thank you for supporting ZoraText!</string>
+    <string name="payment_screen_aftersales_paragraph_2">Your donation will help continued development of ZoraText, and other ZoraText projects.</string>
+    <string name="payment_screen_aftersales_paragraph_2_pending">Your donation is still pending, but it should clear soon.</string>
+    <string name="payment_screen_aftersales_paragraph_3">If you just donated, your donation may still be processing, you should get an email with more information.</string>
+    <string name="payment_screen_payment_failed_title">Donation Error</string>
+    <string name="payment_screen_payment_failed_body">Unfortunately, your donation has failed for one reason or another. Please contact us if you need help. You can reach us at support@zoratext.org, with the button below, or with Send Feedback in Help</string>
+    <string name="payment_screen_payment_failed_body_unconfident">There may have been a problem with your donation. If it did go through, you should receive an email with a confirmation. Please contact us if you need help. You can reach us at support@zoratext.org, with the button below, or with Share Feedback at the main screen.</string>
+    <string name="payment_screen_license_integrity_error">Failed to verify donation. If you believe this to be an error, please contact us.</string>
     <string name="payment_screen_continue_button">Continue</string>
 
-    <string name="payment_unpaid_version_title">Unpaid ZoraText</string>
-    <string name="payment_unpaid_version_indicator">Unpaid</string>
-    <string name="payment_paid_version_indicator">Thank you for using the paid version of ZoraText!</string>
+    <string name="payment_unpaid_version_title">ZoraText - Community Edition</string>
+    <string name="payment_unpaid_version_indicator">Community Edition</string>
+    <string name="payment_paid_version_indicator">Thank you for supporting ZoraText!</string>
 
 
     <!-- Lack of automatic updates notice -->
@@ -490,6 +490,16 @@
 
     <!-- Theme, as in visual style -->
     <string name="theme_settings_title">Theme</string>
+    
+    <!-- Font settings -->
+    <string name="font_settings_title">Fonts</string>
+    
+    <!-- Theme names -->
+    <string name="ivory_turquoise_theme_name">Ivory Turquoise</string>
+    <string name="cherry_glaze_theme_name">Cherry Glaze</string>
+    <string name="modern_mint_theme_name">Modern Mint</string>
+    <string name="cyber_violet_theme_name">Cyber Violet</string>
+    
     <string name="theme_settings_key_borders">Key borders</string>
     <string name="theme_settings_default_themes">Built-in</string>
     <string name="theme_settings_seasonal_themes">Seasonal</string>
