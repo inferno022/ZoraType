@@ -344,8 +344,8 @@ fun PaymentFailedScreen(onExit: () -> Unit = { }) {
             else -> stringResource(R.string.payment_screen_payment_failed_body)
         }
     ))
-        NavigationItem(title = "Email support@zoratext.org", style = NavigationItemStyle.Mail, navigate = {
-            context.openURI("mailto:support@zoratext.org")
+        NavigationItem(title = "Email mail.zoratext@gmail.com", style = NavigationItemStyle.Mail, navigate = {
+            context.openURI("mailto:mail.zoratext@gmail.com")
         })
         Box(modifier = Modifier.fillMaxWidth()) {
             val coroutineScope = rememberCoroutineScope()
@@ -611,7 +611,7 @@ fun PaymentScreen(
 
         ScreenTitle(stringResource(R.string.payment_screen_other_options))
         NavigationItem(title = stringResource(R.string.payment_screen_need_help_title), subtitle = stringResource(R.string.payment_screen_need_help_subtitle), style = NavigationItemStyle.ExternalLink, navigate = {
-            context.openURI("https://keyboard.futo.org/")
+            context.openURI("https://zoratext.org/")
         })
     }
 }

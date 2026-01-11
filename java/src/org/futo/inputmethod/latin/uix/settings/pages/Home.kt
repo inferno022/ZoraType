@@ -203,7 +203,7 @@ fun HomeHeader(navController: NavHostController) {
                     .padding(8.dp)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.zoratext_logo),
+                    painter = painterResource(id = R.drawable.logo),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxSize()

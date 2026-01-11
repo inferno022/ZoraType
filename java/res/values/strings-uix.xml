@@ -250,8 +250,8 @@
     <string name="payment_screen_aftersales_paragraph_2_pending">Your donation is still pending, but it should clear soon.</string>
     <string name="payment_screen_aftersales_paragraph_3">If you just donated, your donation may still be processing, you should get an email with more information.</string>
     <string name="payment_screen_payment_failed_title">Donation Error</string>
-    <string name="payment_screen_payment_failed_body">Unfortunately, your donation has failed for one reason or another. Please contact us if you need help. You can reach us at support@zoratext.org, with the button below, or with Send Feedback in Help</string>
-    <string name="payment_screen_payment_failed_body_unconfident">There may have been a problem with your donation. If it did go through, you should receive an email with a confirmation. Please contact us if you need help. You can reach us at support@zoratext.org, with the button below, or with Share Feedback at the main screen.</string>
+    <string name="payment_screen_payment_failed_body">Unfortunately, your donation has failed for one reason or another. Please contact us if you need help. You can reach us at mail.zoratext@gmail.com, with the button below, or with Send Feedback in Help</string>
+    <string name="payment_screen_payment_failed_body_unconfident">There may have been a problem with your donation. If it did go through, you should receive an email with a confirmation. Please contact us if you need help. You can reach us at mail.zoratext@gmail.com, with the button below, or with Share Feedback at the main screen.</string>
     <string name="payment_screen_license_integrity_error">Failed to verify donation. If you believe this to be an error, please contact us.</string>
     <string name="payment_screen_continue_button">Continue</string>
 
@@ -584,7 +584,7 @@
     <string name="help_menu_futo_chat_subtitle">Wanna talk but don\'t like Discord? Chat here</string>
     <string name="help_menu_github">Public issue tracker (GitHub)</string>
     <string name="help_menu_github_subtitle">Specific bug or feature request? Post here</string>
-    <string name="help_menu_email">Email keyboard@futo.org</string>
+    <string name="help_menu_email">Email mail.zoratext@gmail.com</string>
     <string name="help_menu_email_subtitle">Private feedback, help, or don\'t use GitHub? Email us</string>
     <string name="help_menu_email_tags">gmail, support, contact, help, broken, bug, error, issue, problem, complaint, ticket, payment, support, glitch, malfunction, fix, customer service, crash, question, inquiry, assistance</string>
 

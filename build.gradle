@@ -256,10 +256,10 @@ android {
             it.buildConfigField "String", "ACRA_USER", "\"${acraUser}\""
             it.buildConfigField "String", "ACRA_PASSWORD", "\"${acraPassword}\""
 
-            it.buildConfigField "String", "FUTOPAY_URL", "\"https://pay.zoratext.org/api/PaymentPortal?product=voiceinput&success=zoratext-keyboard%3a%2f%2flicense%2factivate\""
+            it.buildConfigField "String", "FUTOPAY_URL", "\"upi://pay?pa=8080535871@paytm&pn=ZoraText%20Donation&mc=0000&tid=1234567890&tr=zoratext001&tn=Support%20ZoraText%20Development&am=6.99&cu=USD\""
             it.buildConfigField "String", "FUTOPAY_PRICE", "\"~\$6.99\""
 
-            it.buildConfigField "String", "GOOGLEPAY_URL", "\"https://play.google.com/store/apps/details?id=org.zoratext.keyboardpayment\""
+            it.buildConfigField "String", "GOOGLEPAY_URL", "\"upi://pay?pa=8080535871@paytm&pn=ZoraText%20Donation&mc=0000&tid=1234567890&tr=zoratext002&tn=Support%20ZoraText%20Development&am=11.99&cu=USD\""
             it.buildConfigField "String", "GOOGLEPAY_PRICE", "\"~\$11.99\""
         }
     }
