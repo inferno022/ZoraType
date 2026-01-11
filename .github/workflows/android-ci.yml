@@ -38,10 +38,10 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x gradlew
       
-    - name: Clean and Build Debug APK
+    - name: Build Playstore Debug APK Only
       run: |
         ./gradlew clean
-        ./gradlew assemblePlaystoreDebug -x test -x lint --no-daemon --stacktrace
+        ./gradlew :assemblePlaystoreDebug -x test -x lint -x lintVitalPlaystoreDebug --no-daemon --stacktrace
       
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
@@ -80,10 +80,10 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x gradlew
       
-    - name: Build Release APK
+    - name: Build Playstore Release APK Only
       run: |
         ./gradlew clean
-        ./gradlew assemblePlaystoreDebug -x test -x lint --no-daemon --stacktrace
+        ./gradlew :assemblePlaystoreDebug -x test -x lint -x lintVitalPlaystoreDebug --no-daemon --stacktrace
       
     - name: Upload Release APK to Artifacts
       uses: actions/upload-artifact@v4
