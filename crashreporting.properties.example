@@ -1,0 +1,4 @@
+acraEnabled=false
+acraUrl=https://your-acra-server.com
+acraUser=yourUser
+acraPassword=yourPassword

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Application name for the keyboard. -->
+    <string name="english_ime_name">ZoraText</string>
+
+    <!-- Name of Android spell checker service. -->
+    <string name="spell_checker_service_name">ZoraText Spell Checker</string>
+
+    <!-- Title for Android Keyboard settings screen. -->
+    <string name="english_ime_settings">ZoraText Settings</string>
+
+    <!-- Title for the spell checking service settings screen. -->
+    <string name="android_spell_checker_settings">ZoraText Spell Checker Settings</string>
+</resources>
