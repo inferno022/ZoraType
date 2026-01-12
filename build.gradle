@@ -211,9 +211,7 @@ android {
                 'DebugProbesKt.bin',
                 'kotlin-tooling-metadata.json',
                 '**/*.kotlin_metadata',
-                '**/*.kotlin_builtins',
-                'fonts/**',
-                'font_packages/**/*.zip'
+                '**/*.kotlin_builtins'
             ]
         }
         pickFirst '**/libc++_shared.so'

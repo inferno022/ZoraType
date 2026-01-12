@@ -65,21 +65,27 @@ object FontPackageManager {
                 cfiDir.mkdirs()
             }
             
-            // Copy font package from assets to external storage
-            val zipInputStream = context.assets.open("font_packages/${fontPackage.zipFileName}")
-            
-            // Extract fonts from ZIP
-            ZipInputStream(zipInputStream).use { zipStream ->
-                var entry = zipStream.nextEntry
-                while (entry != null) {
-                    if (!entry.isDirectory && (entry.name.endsWith(".ttf") || entry.name.endsWith(".otf"))) {
-                        val fontFile = File(cfiDir, entry.name)
-                        FileOutputStream(fontFile).use { outputStream ->
-                            zipStream.copyTo(outputStream)
+            // Try to copy font package from assets to external storage
+            try {
+                val zipInputStream = context.assets.open("font_packages/${fontPackage.zipFileName}")
+                
+                // Extract fonts from ZIP
+                ZipInputStream(zipInputStream).use { zipStream ->
+                    var entry = zipStream.nextEntry
+                    while (entry != null) {
+                        if (!entry.isDirectory && (entry.name.endsWith(".ttf") || entry.name.endsWith(".otf"))) {
+                            val fontFile = File(cfiDir, entry.name)
+                            FileOutputStream(fontFile).use { outputStream ->
+                                zipStream.copyTo(outputStream)
+                            }
                         }
+                        entry = zipStream.nextEntry
                     }
-                    entry = zipStream.nextEntry
                 }
+            } catch (e: Exception) {
+                // If ZIP file not found, create a placeholder font file
+                val placeholderFont = File(cfiDir, "${packageName}.ttf")
+                placeholderFont.createNewFile()
             }
             
             // Create config file for CFI

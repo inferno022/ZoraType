@@ -47,6 +47,11 @@ jobs:
       
     - name: Build APK
       run: ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace
+      
+    - name: Verify Build Output
+      run: |
+        ls -la build/outputs/apk/playstore/debug/
+        file build/outputs/apk/playstore/debug/*.apk
         
     - name: Upload APK
       uses: softprops/action-gh-release@v1

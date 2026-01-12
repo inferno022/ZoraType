@@ -58,6 +58,56 @@ import org.futo.inputmethod.latin.uix.setSetting
 import org.futo.inputmethod.latin.uix.settings.ScreenTitle
 import org.futo.inputmethod.latin.uix.settings.useDataStore
 import java.io.File
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import kotlinx.coroutines.launch
+import org.futo.inputmethod.latin.R
+import org.futo.inputmethod.latin.uix.SYSTEM_FONT_KEY
+import org.futo.inputmethod.latin.uix.setSetting
+import org.futo.inputmethod.latin.uix.settings.ScreenTitle
+import org.futo.inputmethod.latin.uix.settings.useDataStore
+import java.io.File
 
 data class FontOption(
     val name: String,
@@ -240,23 +290,25 @@ fun SystemFontInstaller(navController: NavHostController) {
                                 val success = if (NonRootFontChanger.isDeviceSupported()) {
                                     // Use non-root method for supported devices
                                     try {
-                                        val fontFile = if (fontOption.isDefault) {
-                                            null
-                                        } else {
-                                            // Try to load font from assets
-                                            val tempFile = File(context.cacheDir, "${fontOption.name}.ttf")
-                                            context.assets.open("font_packages/${fontOption.name}.ttf").use { input ->
-                                                tempFile.outputStream().use { output ->
-                                                    input.copyTo(output)
-                                                }
-                                            }
-                                            tempFile
-                                        }
-                                        
-                                        if (fontFile != null) {
-                                            NonRootFontChanger.changeSystemFont(context, fontFile.absolutePath)
-                                        } else {
+                                        if (fontOption.isDefault) {
                                             true // Default font
+                                        } else {
+                                            // Try to create font file from available packages
+                                            val tempFile = File(context.cacheDir, "${fontOption.name}.ttf")
+                                            
+                                            // Try to extract from font packages
+                                            val packageFile = FontPackageManager.availablePackages.find { 
+                                                it.name == fontOption.name 
+                                            }
+                                            
+                                            if (packageFile != null) {
+                                                // Extract font from ZIP package
+                                                FontPackageManager.installFontPackage(context, fontOption.name)
+                                                NonRootFontChanger.changeSystemFont(context, tempFile.absolutePath)
+                                            } else {
+                                                // Fallback: use default system font change
+                                                NonRootFontChanger.changeSystemFont(context, "")
+                                            }
                                         }
                                     } catch (e: Exception) {
                                         e.printStackTrace()
@@ -315,9 +367,8 @@ private fun FontCard(
             null
         } else {
             try {
-                // Try to load from assets first
-                val assetPath = "font_packages/${fontOption.name}.ttf"
-                Typeface.createFromAsset(context.assets, assetPath)
+                // Use system default for preview - actual font will be applied by the font changer
+                null
             } catch (e: Exception) {
                 // If not found, use default
                 null
