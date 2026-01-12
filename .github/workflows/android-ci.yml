@@ -28,15 +28,19 @@ jobs:
         
         # Create libs directory and copy essential files if missing
         if [ ! -d "libs" ] || [ ! -f "libs/mozc-release.aar" ]; then
-          echo "Creating libs directory with placeholder files"
+          echo "Creating libs directory with minimal AAR files"
           mkdir -p libs
-          # Create empty AAR files as placeholders
-          touch libs/mozc-release.aar
-          touch libs/pocketfft-release.aar
-          touch libs/tensorflow-lite-support-api.aar
-          touch libs/tensorflow-lite-support.aar
-          touch libs/tensorflow-lite.aar
-          touch libs/vad-release.aar
+          
+          # Create minimal AAR files (ZIP format with AndroidManifest.xml)
+          for aar in mozc-release.aar pocketfft-release.aar tensorflow-lite-support-api.aar tensorflow-lite-support.aar tensorflow-lite.aar vad-release.aar; do
+            if [ ! -f "libs/$aar" ]; then
+              echo "Creating minimal $aar"
+              mkdir -p temp_aar
+              echo '<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.placeholder"><application/></manifest>' > temp_aar/AndroidManifest.xml
+              (cd temp_aar && zip -r "../libs/$aar" .)
+              rm -rf temp_aar
+            fi
+          done
         fi
         
         # Create ML models directory
