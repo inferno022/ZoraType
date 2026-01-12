@@ -82,6 +82,7 @@ android {
         compose true
         viewBinding true
         mlModelBinding true
+        buildConfig true
     }
 }
 
