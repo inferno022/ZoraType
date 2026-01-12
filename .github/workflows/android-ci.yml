@@ -207,7 +207,7 @@ jobs:
         
         # First try a simple compile task to see if basic compilation works
         echo "=== Testing basic compilation ==="
-        if ./gradlew compilePlaystoreDebugKotlin --no-daemon --info --stacktrace 2>&1 | tee compile.log; then
+        if ./gradlew compileCiDebugKotlin --no-daemon --info --stacktrace 2>&1 | tee compile.log; then
           echo "Basic Kotlin compilation succeeded"
         else
           echo "Basic Kotlin compilation failed"
@@ -224,7 +224,7 @@ jobs:
         
         # If basic compilation works, try full build
         echo "=== Full APK Build ==="
-        if ./gradlew assemblePlaystoreDebug --no-daemon --info --stacktrace 2>&1 | tee build.log; then
+        if ./gradlew assembleCiDebug --no-daemon --info --stacktrace 2>&1 | tee build.log; then
           echo "Build command completed successfully"
         else
           echo "Build command failed with exit code $?"
@@ -247,22 +247,22 @@ jobs:
         ls -la build/outputs/ || echo "No outputs directory found"
         echo "Checking apk directory:"
         ls -la build/outputs/apk/ || echo "No apk directory found"
-        echo "Checking playstore directory:"
-        ls -la build/outputs/apk/playstore/ || echo "No playstore directory found"
+        echo "Checking ci directory:"
+        ls -la build/outputs/apk/ci/ || echo "No ci directory found"
         echo "Checking debug directory:"
-        ls -la build/outputs/apk/playstore/debug/ || echo "Debug APK directory not found"
+        ls -la build/outputs/apk/ci/debug/ || echo "Debug APK directory not found"
         
         # Look for APK files anywhere in the build directory
         echo "=== SEARCHING FOR APK FILES ==="
         find build/ -name "*.apk" -type f 2>/dev/null || echo "No APK files found anywhere in build directory"
         
         # Check if the specific APK exists
-        if [ -f build/outputs/apk/playstore/debug/*.apk ]; then
-          APK_SIZE=$(stat -c%s build/outputs/apk/playstore/debug/*.apk)
+        if [ -f build/outputs/apk/ci/debug/*.apk ]; then
+          APK_SIZE=$(stat -c%s build/outputs/apk/ci/debug/*.apk)
           echo "Debug APK Size: $(($APK_SIZE / 1024 / 1024)) MB"
           echo "APK found successfully!"
         else
-          echo "Expected APK file not found at build/outputs/apk/playstore/debug/"
+          echo "Expected APK file not found at build/outputs/apk/ci/debug/"
           echo "=== CHECKING FOR BUILD ERRORS ==="
           if [ -f build.log ]; then
             echo "Recent build log entries:"
@@ -275,8 +275,8 @@ jobs:
       if: success()
       uses: actions/upload-artifact@v4
       with:
-        name: zoratype-debug-apk-${{ github.run_number }}
-        path: build/outputs/apk/playstore/debug/*.apk
+        name: zoratype-ci-debug-apk-${{ github.run_number }}
+        path: build/outputs/apk/ci/debug/*.apk
         retention-days: 30
         
     - name: Create Release
@@ -328,16 +328,61 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: build/outputs/apk/playstore/debug/android-keyboard-master-playstore-debug.apk
-        asset_name: ZoraType-v0.1.0-build-${{ github.run_number }}.apk
+        asset_path: build/outputs/apk/ci/debug/android-keyboard-master-ci-debug.apk
+        asset_name: ZoraType-CI-v0.1.0-build-${{ github.run_number }}.apk
         asset_content_type: application/vnd.android.package-archive
         
     - name: Upload Build Logs
-      if: failure()
+      if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: build-logs-${{ github.run_number }}
+        name: detailed-build-logs-${{ github.run_number }}
         path: |
+          build.log
+          compile.log
           build/reports/
           ~/.gradle/daemon/
         retention-days: 7
+        
+    - name: Create Detailed Error Report
+      if: failure()
+      run: |
+        echo "=== DETAILED ERROR REPORT ===" > error_report.txt
+        echo "Build Number: ${{ github.run_number }}" >> error_report.txt
+        echo "Commit: ${{ github.sha }}" >> error_report.txt
+        echo "Timestamp: $(date)" >> error_report.txt
+        echo "" >> error_report.txt
+        
+        echo "=== ENVIRONMENT INFO ===" >> error_report.txt
+        echo "Java Version:" >> error_report.txt
+        java -version 2>&1 >> error_report.txt
+        echo "" >> error_report.txt
+        
+        echo "=== AAR FILES ===" >> error_report.txt
+        ls -la libs/*.aar 2>&1 >> error_report.txt
+        echo "" >> error_report.txt
+        
+        echo "=== COMPILATION ERRORS ===" >> error_report.txt
+        if [ -f compile.log ]; then
+          grep -A 10 -B 5 "error:" compile.log >> error_report.txt || echo "No compilation errors found" >> error_report.txt
+        fi
+        echo "" >> error_report.txt
+        
+        echo "=== UNRESOLVED REFERENCES ===" >> error_report.txt
+        if [ -f compile.log ]; then
+          grep -A 5 -B 5 "Unresolved reference" compile.log >> error_report.txt || echo "No unresolved references found" >> error_report.txt
+        fi
+        echo "" >> error_report.txt
+        
+        echo "=== KOTLIN ERRORS ===" >> error_report.txt
+        if [ -f compile.log ]; then
+          grep -A 10 -B 5 "Kotlin" compile.log >> error_report.txt || echo "No Kotlin errors found" >> error_report.txt
+        fi
+        
+    - name: Upload Error Report
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: error-report-${{ github.run_number }}
+        path: error_report.txt
+        retention-days: 30

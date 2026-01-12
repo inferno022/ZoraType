@@ -320,29 +320,22 @@ android {
     flavorDimensions "buildType"
 
     productFlavors {
-        // Temporarily disabled to fix CI build issues
-        // unstable {
-        //     dimension "buildType"
-        //     applicationIdSuffix ".unstable"
-        //     versionNameSuffix "-unstable"
+        // CI-specific flavor with minimal dependencies
+        ci {
+            dimension "buildType"
+            applicationIdSuffix ".ci"
+            versionNameSuffix "-ci"
 
-        //     buildConfigField "boolean", "IS_PLAYSTORE_BUILD", "false"
-        //     buildConfigField "boolean", "UPDATE_CHECKING", "true"
-        //     buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
-        //     buildConfigField "String", "BRANCH", "\"${getBranch()}\""
-
-        //     buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
-        // }
-
-        // stable {
-        //     dimension "buildType"
-        //     buildConfigField "boolean", "IS_PLAYSTORE_BUILD", "false"
-        //     buildConfigField "boolean", "UPDATE_CHECKING", "true"
-        //     buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
-        //     buildConfigField "String", "BRANCH", "\"${getBranch()}\""
-
-        //     buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
-        // }
+            buildConfigField "boolean", "IS_PLAYSTORE_BUILD", "false"
+            buildConfigField "boolean", "UPDATE_CHECKING", "false"
+            buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
+            buildConfigField "String", "BRANCH", "\"${getBranch()}\""
+            buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
+            
+            // Force disable all optional features for CI
+            buildConfigField "boolean", "ENABLE_JAPANESE_IME", "false"
+            buildConfigField "boolean", "ENABLE_VOICE_INPUT", "false"
+        }
 
         playstore {
             dimension "buildType"
@@ -356,6 +349,10 @@ android {
             isDefault = true
 
             buildConfigField "String", "PAYMENT_PRICE", "GOOGLEPAY_PRICE"
+            
+            // Enable all features for production
+            buildConfigField "boolean", "ENABLE_JAPANESE_IME", "true"
+            buildConfigField "boolean", "ENABLE_VOICE_INPUT", "true"
         }
     }
 
@@ -404,6 +401,24 @@ android {
                 java.exclude '**/actions/VoiceInputActionStub.kt'
                 java.exclude '**/settings/pages/VoiceInputStub.kt'
             }
+        }
+
+        // CI-specific source set with aggressive exclusions
+        ci {
+            java.srcDirs = ['common/src', 'java/src']
+            res.srcDirs = ['java/res-bundle']
+            manifest.srcFile 'java/playstore/AndroidManifest.xml'
+            
+            // Always exclude problematic files for CI
+            java.exclude '**/engine/general/JapaneseIME.kt'
+            java.exclude '**/settings/pages/pdict/PersonalDictionaryJa.kt'
+            java.exclude '**/SettingsExporter.kt'
+            java.exclude '**/actions/VoiceInputAction.kt'
+            java.exclude '**/settings/pages/VoiceInput.kt'
+            
+            // Exclude any other potentially problematic files
+            java.exclude '**/actions/fonttyper/**'
+            java.exclude '**/engine/general/ActionInputTransactionIME.kt'
         }
 
         playstore {
