@@ -186,7 +186,22 @@ jobs:
         echo "Available Gradle tasks:"
         ./gradlew tasks --all | grep -i assemble || echo "Could not list assemble tasks"
         echo "Starting build with detailed logging..."
-        ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --debug --max-workers=2 2>&1 | tee build.log
+        
+        # Run the build and capture both success and failure
+        if ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --debug --max-workers=2 2>&1 | tee build.log; then
+          echo "Build command completed successfully"
+        else
+          echo "Build command failed with exit code $?"
+          echo "=== BUILD FAILURE ANALYSIS ==="
+          echo "Last 50 lines of build log:"
+          tail -50 build.log || echo "Could not read build log"
+          echo "=== SEARCHING FOR SPECIFIC ERRORS ==="
+          grep -i "error" build.log | head -20 || echo "No 'error' patterns found"
+          grep -i "failed" build.log | head -20 || echo "No 'failed' patterns found"
+          grep -i "exception" build.log | head -20 || echo "No 'exception' patterns found"
+          exit 1
+        fi
+        
         echo "Build completed. Checking for specific errors..."
         if [ -f build.log ]; then
           echo "=== COMPILATION ERRORS ==="
@@ -199,12 +214,34 @@ jobs:
       
     - name: Verify Build Output
       run: |
+        echo "=== BUILD OUTPUT ANALYSIS ==="
+        echo "Checking build directory structure:"
+        ls -la build/ || echo "No build directory found"
+        echo "Checking outputs directory:"
+        ls -la build/outputs/ || echo "No outputs directory found"
+        echo "Checking apk directory:"
+        ls -la build/outputs/apk/ || echo "No apk directory found"
+        echo "Checking playstore directory:"
+        ls -la build/outputs/apk/playstore/ || echo "No playstore directory found"
+        echo "Checking debug directory:"
         ls -la build/outputs/apk/playstore/debug/ || echo "Debug APK directory not found"
+        
+        # Look for APK files anywhere in the build directory
+        echo "=== SEARCHING FOR APK FILES ==="
+        find build/ -name "*.apk" -type f 2>/dev/null || echo "No APK files found anywhere in build directory"
+        
+        # Check if the specific APK exists
         if [ -f build/outputs/apk/playstore/debug/*.apk ]; then
           APK_SIZE=$(stat -c%s build/outputs/apk/playstore/debug/*.apk)
           echo "Debug APK Size: $(($APK_SIZE / 1024 / 1024)) MB"
+          echo "APK found successfully!"
         else
-          echo "APK file not found"
+          echo "Expected APK file not found at build/outputs/apk/playstore/debug/"
+          echo "=== CHECKING FOR BUILD ERRORS ==="
+          if [ -f build.log ]; then
+            echo "Recent build log entries:"
+            tail -100 build.log | grep -E "(FAILED|ERROR|Exception)" || echo "No obvious errors in recent log"
+          fi
           exit 1
         fi
         
