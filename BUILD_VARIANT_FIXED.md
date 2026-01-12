@@ -270,4 +270,4 @@ The next GitHub Actions run should complete successfully with the correct `plays
 
 ---
 
-*ZoraText v2.0.2 - Reliable build system with correct variant configuration and enhanced CI/CD debugging.*
+*ZoraType v2.0.2 - Reliable build system with correct variant configuration and enhanced CI/CD debugging.*

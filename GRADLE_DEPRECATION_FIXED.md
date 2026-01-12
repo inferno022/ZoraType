@@ -254,4 +254,4 @@ Status: ✅ GRADLE 9.0 COMPATIBLE - ALL DEPRECATIONS RESOLVED
 
 ---
 
-*ZoraText v2.0.2 - Modern build system with Gradle 9.0 compatibility and zero deprecation warnings.*
+*ZoraType v2.0.2 - Modern build system with Gradle 9.0 compatibility and zero deprecation warnings.*

@@ -1,4 +1,4 @@
-# ✅ ZoraText v2.0.0 - Build Status: PRODUCTION READY
+# ✅ ZoraType v2.0.0 - Build Status: PRODUCTION READY
 
 [![Android Build](https://github.com/inferno022/ZoraType/actions/workflows/android-ci.yml/badge.svg)](https://github.com/inferno022/ZoraType/actions/workflows/android-ci.yml)
 [![CI](https://github.com/inferno022/ZoraType/actions/workflows/ci.yml/badge.svg)](https://github.com/inferno022/ZoraType/actions/workflows/ci.yml)

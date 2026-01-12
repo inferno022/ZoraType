@@ -1,4 +1,4 @@
-name: ZoraText Android Build
+name: ZoraType Android Build
 
 on:
   push:
@@ -61,10 +61,6 @@ jobs:
         
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
-      with:
-        api-level: 35
-        target: android-35
-        arch: x86_64
         
     - name: Accept Android SDK Licenses
       run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
@@ -169,7 +165,7 @@ jobs:
       if: success()
       uses: actions/upload-artifact@v4
       with:
-        name: zoratext-debug-apk-${{ github.run_number }}
+        name: zoratype-debug-apk-${{ github.run_number }}
         path: build/outputs/apk/playstore/debug/*.apk
         retention-days: 30
         

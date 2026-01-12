@@ -54,7 +54,7 @@ The builds are actually working correctly. The issue was likely a timeout or tem
 - Professional themes (Cyber Violet, Modern Mint, Cherry Glaze, Ivory Turquoise)
 - Google Fonts integration
 - Custom font import
-- ZoraText branding
+- ZoraType branding
 - Accessibility service for universal font overlay
 - OEM-specific font changing (Samsung, Xiaomi, Huawei, etc.)
 
@@ -97,7 +97,7 @@ If builds seem to hang:
 
 **THE BUILDS ARE WORKING CORRECTLY** ✅
 
-The ZoraText keyboard app builds successfully with all features:
+The ZoraType keyboard app builds successfully with all features:
 - 180MB APK with comprehensive font system
 - All Kotlin compilation successful
 - All required configuration files present

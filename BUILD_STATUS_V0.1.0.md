@@ -1,4 +1,4 @@
-# Build Status - ZoraText v0.1.0
+# Build Status - ZoraType v0.1.0
 
 ## Current Status
 

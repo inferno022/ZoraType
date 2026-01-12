@@ -126,4 +126,4 @@ Status: ✅ GITHUB ACTIONS FIXED AND READY
 
 ---
 
-*ZoraText v2.0.2 - Professional CI/CD pipeline with latest GitHub Actions compatibility.*
+*ZoraType v2.0.2 - Professional CI/CD pipeline with latest GitHub Actions compatibility.*

@@ -1,15 +1,14 @@
-# ZoraText - Advanced Android Keyboard v0.1.0
+# ZoraType - Advanced Android Keyboard v0.1.0
 
 [![Android Build](https://github.com/inferno022/ZoraType/actions/workflows/android-ci.yml/badge.svg)](https://github.com/inferno022/ZoraType/actions/workflows/android-ci.yml)
-[![CI](https://github.com/inferno022/ZoraType/actions/workflows/ci.yml/badge.svg)](https://github.com/inferno022/ZoraType/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/inferno022/ZoraType)](https://github.com/inferno022/ZoraType/releases)
 [![License](https://img.shields.io/github/license/inferno022/ZoraType)](LICENSE)
 
 ## System-Wide Font Customization
 
-ZoraText provides system-wide font customization capabilities across Android applications without requiring root access. The keyboard integrates with manufacturer-specific theme engines and accessibility services to enable font modifications in messaging, social media, and system applications.
+ZoraType provides system-wide font customization capabilities across Android applications without requiring root access. The keyboard integrates with manufacturer-specific theme engines and accessibility services to enable font modifications in messaging, social media, and system applications.
 
-![ZoraText Logo](logo.png)
+![ZoraType Logo](logo.png)
 
 ---
 
@@ -136,7 +135,7 @@ ZoraText provides system-wide font customization capabilities across Android app
 ### Basic Installation
 
 1. Download and install the APK package
-2. Enable ZoraText in system keyboard settings
+2. Enable ZoraType in system keyboard settings
 3. Configure accessibility permissions if using generic Android device
 4. Access font settings through the application interface
 
@@ -153,7 +152,7 @@ ZoraText provides system-wide font customization capabilities across Android app
 
 ### Size Comparison
 
-- **ZoraText**: 80MB (optimized from 200MB)
+- **ZoraType**: 80MB (optimized from 200MB)
 
 - **Standard keyboards**: ~33MB average
 
@@ -211,7 +210,7 @@ ZoraText provides system-wide font customization capabilities across Android app
 
 ## Support and Contact
 
-- **Email**: mail.zoratext@gmail.com
+- **Email**: mail.zoratype@gmail.com
 
 - **Issues**: GitHub Issues tracker
 
@@ -225,4 +224,4 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ---
 
-*ZoraText provides advanced typography capabilities for Android devices through innovative font management technology.*
+*ZoraType provides advanced typography capabilities for Android devices through innovative font management technology.*

@@ -1,8 +1,8 @@
-# ZoraText v0.1.0 - Initial Release
+# ZoraType v0.1.0 - Initial Release
 
 ## Overview
 
-First working release of ZoraText - an advanced Android keyboard with system-wide font customization capabilities.
+First working release of ZoraType - an advanced Android keyboard with system-wide font customization capabilities.
 
 ## Features
 
@@ -29,9 +29,9 @@ First working release of ZoraText - an advanced Android keyboard with system-wid
 - Material Design 3 compliance
 - Dynamic theme adaptation
 
-### ZoraText Branding
+### ZoraType Branding
 - Complete rebrand from original FUTO keyboard
-- ZoraText logo integration
+- ZoraType logo integration
 - Professional UI design
 - Donation-focused payment system
 
@@ -74,8 +74,8 @@ First working release of ZoraText - an advanced Android keyboard with system-wid
 2. Enable "Install from unknown sources" in Android settings
 3. Install the APK
 4. Go to Settings > System > Languages & input > Virtual keyboard
-5. Enable ZoraText
-6. Set ZoraText as default keyboard
+5. Enable ZoraType
+6. Set ZoraType as default keyboard
 
 ## Next Steps (v0.2.0)
 
@@ -89,7 +89,7 @@ First working release of ZoraText - an advanced Android keyboard with system-wid
 ## Support
 
 - GitHub Issues: Report bugs and feature requests
-- Email: mail.zoratext@gmail.com
+- Email: mail.zoratype@gmail.com
 - Documentation: See project README
 
 ---

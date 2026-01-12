@@ -1,4 +1,4 @@
-# ZoraText CI/CD Setup Guide
+# ZoraType CI/CD Setup Guide
 
 ## 🚀 Migration from Ionic AppFlow to GitHub Actions
 
@@ -47,12 +47,12 @@ GOOGLE_PLAY_SERVICE_ACCOUNT_JSON  # Service account JSON for Play Store API
 
 # Generate new keystore
 
-keytool -genkey -v -keystore zoratext-release.keystore -alias zoratext -keyalg RSA -keysize 2048 -validity 10000
+keytool -genkey -v -keystore zoratype-release.keystore -alias zoratype -keyalg RSA -keysize 2048 -validity 10000
 
 # Convert to base64 for GitHub secrets
 
-base64 -i zoratext-release.keystore | pbcopy  # macOS
-base64 -i zoratext-release.keystore           # Linux
+base64 -i zoratype-release.keystore | pbcopy  # macOS
+base64 -i zoratype-release.keystore           # Linux
 
 ```
 

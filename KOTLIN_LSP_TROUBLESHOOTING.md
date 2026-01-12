@@ -208,4 +208,4 @@ Status: ✅ RESOLVED - Language Server should now work normally
 
 ---
 
-*ZoraText v2.0.1 - Professional Android keyboard with stable development environment.*
+*ZoraType v2.0.1 - Professional Android keyboard with stable development environment.*

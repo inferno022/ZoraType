@@ -1,8 +1,8 @@
-# ZoraText v2.0.0 - Technical Summary
+# ZoraType v2.0.0 - Technical Summary
 
 ## System-Wide Font Customization Implementation
 
-ZoraText v2.0.0 introduces comprehensive system-wide font customization capabilities across Android applications without requiring root access through innovative technical implementation.
+ZoraType v2.0.0 introduces comprehensive system-wide font customization capabilities across Android applications without requiring root access through innovative technical implementation.
 
 ---
 
@@ -258,4 +258,4 @@ ZoraText v2.0.0 introduces comprehensive system-wide font customization capabili
 
 ---
 
-*ZoraText v2.0.0 represents a significant advancement in mobile typography technology through innovative system integration and comprehensive device compatibility.*
+*ZoraType v2.0.0 represents a significant advancement in mobile typography technology through innovative system integration and comprehensive device compatibility.*

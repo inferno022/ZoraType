@@ -1,14 +1,14 @@
-# ZoraText System Fonts - Technical Documentation
+# ZoraType System Fonts - Technical Documentation
 
 ## System-Wide Font Customization
 
-ZoraText provides comprehensive system-wide font customization capabilities across Android applications without requiring root access. The implementation utilizes manufacturer-specific theme engines and accessibility services to enable font modifications in messaging, social media, and system applications.
+ZoraType provides comprehensive system-wide font customization capabilities across Android applications without requiring root access. The implementation utilizes manufacturer-specific theme engines and accessibility services to enable font modifications in messaging, social media, and system applications.
 
 ## Technical Implementation
 
 ### Font Application Methods
 
-ZoraText employs multiple approaches to achieve system-wide font customization:
+ZoraType employs multiple approaches to achieve system-wide font customization:
 
 #### OEM Integration
 
@@ -40,7 +40,7 @@ ZoraText employs multiple approaches to achieve system-wide font customization:
 
 - 80MB available storage space (optimized from 200MB)
 
-- ZoraText keyboard application
+- ZoraType keyboard application
 
 ### Optional Requirements
 
@@ -72,8 +72,8 @@ ZoraText employs multiple approaches to achieve system-wide font customization:
 
 ### Device Setup
 
-1. Install ZoraText application
-2. Enable ZoraText in system keyboard settings
+1. Install ZoraType application
+2. Enable ZoraType in system keyboard settings
 3. Configure accessibility permissions if required
 
 ### Font Application
@@ -87,7 +87,7 @@ ZoraText employs multiple approaches to achieve system-wide font customization:
 
 ### Font Installation Process
 
-1. ZoraText extracts fonts from package files
+1. ZoraType extracts fonts from package files
 2. Fonts are processed for device compatibility
 3. Application uses appropriate method based on device manufacturer
 4. Font changes are applied through selected integration method
@@ -210,4 +210,4 @@ ZoraText employs multiple approaches to achieve system-wide font customization:
 
 ---
 
-*ZoraText provides advanced typography capabilities for Android devices through innovative font management technology.*
+*ZoraType provides advanced typography capabilities for Android devices through innovative font management technology.*

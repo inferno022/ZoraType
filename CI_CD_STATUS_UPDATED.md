@@ -1,4 +1,4 @@
-# 🚀 ZoraText v2.0.1 - CI/CD Pipeline Enhanced
+# 🚀 ZoraType v2.0.1 - CI/CD Pipeline Enhanced
 
 [![Android Build](https://github.com/inferno022/ZoraType/actions/workflows/android-ci.yml/badge.svg)](https://github.com/inferno022/ZoraType/actions/workflows/android-ci.yml)
 [![CI](https://github.com/inferno022/ZoraType/actions/workflows/ci.yml/badge.svg)](https://github.com/inferno022/ZoraType/actions/workflows/ci.yml)
@@ -6,7 +6,7 @@
 
 ## ✅ **REPOSITORY AND CI/CD UPDATED**
 
-The ZoraText repository has been successfully updated with enhanced CI/CD pipeline and comprehensive automation.
+The ZoraType repository has been successfully updated with enhanced CI/CD pipeline and comprehensive automation.
 
 ---
 
@@ -184,7 +184,7 @@ The ZoraText repository has been successfully updated with enhanced CI/CD pipeli
 
 ## 🎉 **SUMMARY**
 
-ZoraText v2.0.1 now features a comprehensive CI/CD pipeline with:
+ZoraType v2.0.1 now features a comprehensive CI/CD pipeline with:
 
 - **Enhanced GitHub Actions** workflows for automated building
 
@@ -204,4 +204,4 @@ The repository is now equipped with professional-grade automation suitable for c
 
 ---
 
-*ZoraText v2.0.1 - Professional Android keyboard with system-wide font customization and enhanced CI/CD pipeline.*
+*ZoraType v2.0.1 - Professional Android keyboard with system-wide font customization and enhanced CI/CD pipeline.*

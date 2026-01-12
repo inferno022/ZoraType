@@ -271,4 +271,4 @@ The next GitHub Actions run should complete successfully with proper APK generat
 
 ---
 
-*ZoraText v2.0.2 - Robust build system with complete import resolution and enhanced CI/CD debugging.*
+*ZoraType v2.0.2 - Robust build system with complete import resolution and enhanced CI/CD debugging.*

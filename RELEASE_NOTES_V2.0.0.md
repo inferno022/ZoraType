@@ -1,4 +1,4 @@
-# ZoraText v2.0.0 - Release Notes
+# ZoraType v2.0.0 - Release Notes
 
 ## System-Wide Font Customization Release
 
@@ -146,7 +146,7 @@ This release introduces comprehensive system-wide font customization capabilitie
 
 1. Download APK from release assets
 2. Install on Android device
-3. Enable ZoraText in system keyboard settings
+3. Enable ZoraType in system keyboard settings
 4. Configure accessibility permissions if required
 
 ### Font Configuration
@@ -284,4 +284,4 @@ This release introduces comprehensive system-wide font customization capabilitie
 
 ---
 
-*ZoraText v2.0.0 represents a significant advancement in mobile typography capabilities, providing comprehensive system-wide font customization through innovative technical implementation.*
+*ZoraType v2.0.0 represents a significant advancement in mobile typography capabilities, providing comprehensive system-wide font customization through innovative technical implementation.*

@@ -280,4 +280,4 @@ The next GitHub Actions run should complete successfully with the simplified con
 
 ---
 
-*ZoraText v2.0.2 - Simplified build configuration for reliable CI/CD deployment with full feature preservation.*
+*ZoraType v2.0.2 - Simplified build configuration for reliable CI/CD deployment with full feature preservation.*

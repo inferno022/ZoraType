@@ -331,4 +331,4 @@ Use the debug build for immediate deployment while continuing to investigate the
 
 ---
 
-*ZoraText v2.0.1 - Professional Android keyboard with comprehensive troubleshooting support.*
+*ZoraType v2.0.1 - Professional Android keyboard with comprehensive troubleshooting support.*
