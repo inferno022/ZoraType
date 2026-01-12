@@ -65,16 +65,27 @@ jobs:
     - name: Make Gradlew Executable
       run: chmod +x gradlew
       
+    - name: Show Build Variants
+      run: |
+        echo "Available build variants:"
+        ./gradlew tasks --all | grep -i assemble | head -10
+        echo "Default build variant:"
+        ./gradlew properties | grep -i default || echo "No default found"
+      
     - name: Run Tests
       run: ./gradlew testPlaystoreDebugUnitTest --no-daemon --stacktrace
       
     - name: Build Debug APK
       if: matrix.build-type == 'debug'
-      run: ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --warning-mode all
+      run: |
+        echo "Building Playstore Debug APK..."
+        ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --warning-mode all
       
     - name: Build Release APK
       if: matrix.build-type == 'release'
-      run: ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --warning-mode all
+      run: |
+        echo "Building Playstore Debug APK (Release configuration)..."
+        ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --warning-mode all
       
     - name: Verify Build Output
       run: |

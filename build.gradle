@@ -308,7 +308,6 @@ android {
             buildConfigField "boolean", "UPDATE_CHECKING", "true"
             buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
             buildConfigField "String", "BRANCH", "\"${getBranch()}\""
-            isDefault = true
 
             buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
         }
@@ -332,6 +331,7 @@ android {
             buildConfigField "boolean", "UPDATE_CHECKING", "false"
             buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
             buildConfigField "String", "BRANCH", "\"${getBranch()}\""
+            isDefault = true
 
             buildConfigField "String", "PAYMENT_PRICE", "GOOGLEPAY_PRICE"
         }

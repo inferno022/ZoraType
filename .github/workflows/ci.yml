@@ -156,7 +156,9 @@ jobs:
       run: chmod +x gradlew
       
     - name: Build Debug APK
-      run: ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --warning-mode all
+      run: |
+        echo "Building Playstore Debug APK..."
+        ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --warning-mode all
       
     - name: Verify Build
       run: |
