@@ -1,5 +1,10 @@
 # ZoraText - Advanced Android Keyboard
 
+[![Android Build](https://github.com/inferno022/ZoraType/actions/workflows/android-ci.yml/badge.svg)](https://github.com/inferno022/ZoraType/actions/workflows/android-ci.yml)
+[![CI](https://github.com/inferno022/ZoraType/actions/workflows/ci.yml/badge.svg)](https://github.com/inferno022/ZoraType/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/inferno022/ZoraType)](https://github.com/inferno022/ZoraType/releases)
+[![License](https://img.shields.io/github/license/inferno022/ZoraType)](LICENSE)
+
 ## System-Wide Font Customization
 
 ZoraText provides system-wide font customization capabilities across Android applications without requiring root access. The keyboard integrates with manufacturer-specific theme engines and accessibility services to enable font modifications in messaging, social media, and system applications.
