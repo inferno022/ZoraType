@@ -56,7 +56,6 @@ import org.futo.inputmethod.latin.uix.settings.UserSettingsMenu
 import org.futo.inputmethod.latin.uix.settings.render
 import org.futo.inputmethod.latin.uix.settings.useDataStoreValue
 import org.futo.inputmethod.latin.uix.settings.userSettingNavigationItem
-import org.futo.inputmethod.latin.uix.theme.Typography
 import org.futo.inputmethod.latin.uix.settings.renderAnimated
 import org.futo.inputmethod.latin.uix.settings.pages.IS_ALREADY_PAID
 import org.futo.inputmethod.latin.uix.settings.pages.IS_DEVELOPER
@@ -219,7 +218,7 @@ fun HomeHeader(navController: NavHostController) {
             Spacer(modifier = Modifier.height(24.dp))
             Text(
                 text = "ZoraText",
-                style = Typography.Heading.ExtraLarge.copy(
+                style = MaterialTheme.typography.headlineLarge.copy(
                     fontSize = 36.sp,
                     letterSpacing = (-1.5).sp
                 ),
@@ -228,7 +227,7 @@ fun HomeHeader(navController: NavHostController) {
             )
             Text(
                 text = "Professional. Seamless. Minimalist.",
-                style = Typography.Body.MediumMl.copy(
+                style = MaterialTheme.typography.bodyLarge.copy(
                     fontSize = 16.sp,
                     letterSpacing = 0.5.sp
                 ),
@@ -288,7 +287,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             if(isPaid || LocalInspectionMode.current) {
                 Text(
                     stringResource(R.string.payment_paid_version_indicator),
-                    style = Typography.SmallMl,
+                    style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.primary
@@ -298,7 +297,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
             Text(
                 "v${BuildConfig.VERSION_NAME} Professional Edition",
-                style = Typography.Small,
+                style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
@@ -332,7 +331,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 stringResource(R.string.settings_try_typing_here), 
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold,
-                style = Typography.Body.MediumMl
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
