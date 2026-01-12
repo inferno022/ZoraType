@@ -52,6 +52,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            
+            // Check if real VAD AAR file exists
+            def hasVad = file('../libs/vad-release.aar').exists() && file('../libs/vad-release.aar').length() > 10000
+            buildConfigField "boolean", "HAS_VAD", hasVad.toString()
+        }
+        debug {
+            // Check if real VAD AAR file exists
+            def hasVad = file('../libs/vad-release.aar').exists() && file('../libs/vad-release.aar').length() > 10000
+            buildConfigField "boolean", "HAS_VAD", hasVad.toString()
         }
     }
 
@@ -94,7 +103,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-compose:2.7.7'
     implementation 'androidx.datastore:datastore-preferences:1.1.1'
 
-    implementation(name:'vad-release', ext:'aar')
+    // VAD dependency - only include if real AAR file exists
+    if (file('../libs/vad-release.aar').exists() && file('../libs/vad-release.aar').length() > 10000) {
+        implementation(name:'vad-release', ext:'aar')
+    }
 
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1'
 }
