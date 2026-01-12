@@ -57,6 +57,9 @@ import org.futo.inputmethod.latin.uix.SYSTEM_FONT_KEY
 import org.futo.inputmethod.latin.uix.setSetting
 import org.futo.inputmethod.latin.uix.settings.ScreenTitle
 import org.futo.inputmethod.latin.uix.settings.useDataStore
+import org.futo.inputmethod.latin.uix.settings.pages.themes.GoogleFontsService
+import org.futo.inputmethod.latin.uix.settings.pages.themes.FontPackageManager
+import org.futo.inputmethod.latin.uix.settings.pages.themes.NonRootFontChanger
 import java.io.File
 data class FontOption(
     val name: String,
