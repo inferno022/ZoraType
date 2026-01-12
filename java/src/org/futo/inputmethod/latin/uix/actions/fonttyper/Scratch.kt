@@ -19,7 +19,11 @@ import org.futo.inputmethod.latin.R
 object ScratchRenderer: WordImageRenderer() {
     override val font: ((Context) -> Typeface)?
         get() = {
-            Typeface.createFromAsset(it.assets, "fonts/Scratch.ttf")
+            try {
+                Typeface.createFromAsset(it.assets, "fonts/Scratch.ttf")
+            } catch (e: Exception) {
+                Typeface.MONOSPACE // Fallback to system monospace font
+            }
         }
 
     override val name: Int
