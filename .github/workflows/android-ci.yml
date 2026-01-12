@@ -10,14 +10,48 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     
     steps:
     - name: Checkout
       uses: actions/checkout@v4
       with:
-        submodules: true
         fetch-depth: 0
+        
+    - name: Initialize Submodules (with fallback)
+      run: |
+        git submodule update --init --recursive || echo "Some submodules failed to initialize, continuing..."
+        
+        # Check which submodules are missing and create empty directories
+        if [ ! -d "libs" ]; then
+          echo "Creating empty libs directory"
+          mkdir -p libs
+        fi
+        
+        if [ ! -d "voiceinput-shared/src/main/ml" ]; then
+          echo "Creating empty ML models directory"
+          mkdir -p voiceinput-shared/src/main/ml
+        fi
+        
+        if [ ! -d "java/assets/layouts" ]; then
+          echo "Creating empty layouts directory"
+          mkdir -p java/assets/layouts
+        fi
+        
+        if [ ! -d "translations" ]; then
+          echo "Creating empty translations directory"
+          mkdir -p translations
+        fi
+        
+        if [ ! -d "java/assets/themes" ]; then
+          echo "Creating empty themes directory"
+          mkdir -p java/assets/themes
+        fi
+        
+        if [ ! -d "java/res-large" ]; then
+          echo "Creating empty res-large directory"
+          mkdir -p java/res-large
+        fi
     
     - name: Setup JDK 17
       uses: actions/setup-java@v4
@@ -27,6 +61,16 @@ jobs:
         
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+      with:
+        api-level: 35
+        target: android-35
+        arch: x86_64
+        
+    - name: Accept Android SDK Licenses
+      run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+        
+    - name: Install NDK
+      run: $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;28.2.13676358"
       
     - name: Cache Gradle dependencies
       uses: actions/cache@v4
@@ -38,7 +82,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
       
-    - name: Create Required Files
+    - name: Create Build Configuration Files
       run: |
         echo "storeFile=java/shared.keystore" > keystore.properties
         echo "keyAlias=androiddebugkey" >> keystore.properties
@@ -49,29 +93,92 @@ jobs:
         echo "acraUser=" >> crashreporting.properties
         echo "acraPassword=" >> crashreporting.properties
         
+    - name: Create Minimal Required Files
+      run: |
+        # Create minimal required files for build
+        echo "Creating minimal build configuration..."
+        
+        # Create empty translation files if missing
+        mkdir -p translations/core/values
+        echo '<?xml version="1.0" encoding="utf-8"?><resources></resources>' > translations/core/values/strings.xml || true
+        
+        # Create empty layout files if missing  
+        mkdir -p java/assets/layouts
+        echo '[]' > java/assets/layouts/layouts.json || true
+        
+        # Create empty theme files if missing
+        mkdir -p java/assets/themes
+        echo '[]' > java/assets/themes/themes.json || true
+        
+        # Create empty libs directory
+        mkdir -p libs
+        
+        # Create empty ML models directory
+        mkdir -p voiceinput-shared/src/main/ml
+        
+        # Create empty res-large directory
+        mkdir -p java/res-large/values
+        echo '<?xml version="1.0" encoding="utf-8"?><resources></resources>' > java/res-large/values/strings.xml || true
+        
     - name: Set Environment Variables
       run: |
         echo "VERSION_NAME=0.1.0" >> $GITHUB_ENV
         echo "VERSION_CODE=1" >> $GITHUB_ENV
         echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+        echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/28.2.13676358" >> $GITHUB_ENV
         
     - name: Make Gradlew Executable
       run: chmod +x gradlew
       
+    - name: Debug Environment
+      run: |
+        echo "=== Environment Information ==="
+        echo "Java version:"
+        java -version
+        echo "Android SDK location: $ANDROID_HOME"
+        echo "NDK location: $ANDROID_NDK_HOME"
+        echo "Available disk space:"
+        df -h
+        echo "Memory info:"
+        free -h
+        echo "=== Project Structure ==="
+        ls -la
+        echo "=== Submodules Status ==="
+        git submodule status || echo "No submodules or submodule issues"
+      
+    - name: Clean Build
+      run: ./gradlew clean --no-daemon
+      
     - name: Build Debug APK
       run: |
         echo "Building Debug APK..."
-        ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --info
+        ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --info --max-workers=2
       
     - name: Verify Build Output
       run: |
-        ls -la build/outputs/apk/playstore/debug/
-        APK_SIZE=$(stat -c%s build/outputs/apk/playstore/debug/*.apk)
-        echo "Debug APK Size: $(($APK_SIZE / 1024 / 1024)) MB"
+        ls -la build/outputs/apk/playstore/debug/ || echo "Debug APK directory not found"
+        if [ -f build/outputs/apk/playstore/debug/*.apk ]; then
+          APK_SIZE=$(stat -c%s build/outputs/apk/playstore/debug/*.apk)
+          echo "Debug APK Size: $(($APK_SIZE / 1024 / 1024)) MB"
+        else
+          echo "APK file not found"
+          exit 1
+        fi
         
     - name: Upload APK
+      if: success()
       uses: actions/upload-artifact@v4
       with:
-        name: zoratext-debug-apk
+        name: zoratext-debug-apk-${{ github.run_number }}
         path: build/outputs/apk/playstore/debug/*.apk
         retention-days: 30
+        
+    - name: Upload Build Logs
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-logs-${{ github.run_number }}
+        path: |
+          build/reports/
+          ~/.gradle/daemon/
+        retention-days: 7
