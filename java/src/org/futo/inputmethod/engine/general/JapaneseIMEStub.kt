@@ -13,6 +13,12 @@ import java.io.File
 // Stub function when MOZC AAR is not available
 fun mozcUserProfileDir(context: Context): File = File(context.applicationInfo.dataDir, ".mozc")
 
+// Stub function when MOZC AAR is not available
+fun refreshMozcDictionaries(context: Context, executor: Any) {}
+
+// Stub function when MOZC AAR is not available
+fun initJniDictLocations(context: Context) {}
+
 // Stub implementation when MOZC AAR is not available
 object JapaneseIMESettings {
     val FlickOnly = SettingsKey(
