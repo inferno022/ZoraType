@@ -1,4 +1,4 @@
-name: ZoraType Android Build
+name: ZoraType Build & Release
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-release:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     
@@ -252,6 +252,59 @@ jobs:
         name: zoratype-debug-apk-${{ github.run_number }}
         path: build/outputs/apk/playstore/debug/*.apk
         retention-days: 30
+        
+    - name: Create Release
+      if: success() && github.ref == 'refs/heads/master'
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v0.1.0-build-${{ github.run_number }}
+        release_name: ZoraType v0.1.0 Build ${{ github.run_number }}
+        body: |
+          ## ZoraType v0.1.0 - Automatic Build ${{ github.run_number }}
+          
+          ### 🚀 Features
+          - System-wide font customization (works in WhatsApp, Twitter, etc.)
+          - Professional themes (Ivory Turquoise, Cherry Glaze, Modern Mint, Cyber Violet)
+          - Google Fonts integration with 1000+ fonts
+          - Custom font file import
+          - Non-root font changing for all Android devices
+          
+          ### 📱 Installation
+          1. Download the APK below
+          2. Enable "Install from Unknown Sources" in Android settings
+          3. Install the APK
+          4. Go to Settings > System > Languages & Input > Virtual Keyboard
+          5. Enable ZoraType and set as default keyboard
+          
+          ### 💡 Usage
+          - Tap the **Fonts** button on the keyboard home screen
+          - Choose from included fonts or download from Google Fonts
+          - Fonts will change system-wide across all apps
+          
+          ### 📧 Support
+          - Email: mail.zoratype@gmail.com
+          - Issues: [GitHub Issues](https://github.com/inferno022/ZoraType/issues)
+          
+          **Build Info:**
+          - Commit: ${{ github.sha }}
+          - Build Date: ${{ github.event.head_commit.timestamp }}
+          - APK Size: ~172 MB (includes comprehensive font system)
+        draft: false
+        prerelease: false
+        
+    - name: Upload APK to Release
+      if: success() && github.ref == 'refs/heads/master'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: build/outputs/apk/playstore/debug/android-keyboard-master-playstore-debug.apk
+        asset_name: ZoraType-v0.1.0-build-${{ github.run_number }}.apk
+        asset_content_type: application/vnd.android.package-archive
         
     - name: Upload Build Logs
       if: failure()
