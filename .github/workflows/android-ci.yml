@@ -74,7 +74,7 @@ jobs:
       
     - name: Build Release APK
       if: matrix.build-type == 'release'
-      run: ./gradlew assemblePlaystoreRelease --no-daemon --stacktrace
+      run: ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace
       
     - name: Verify Build Output
       run: |
@@ -84,9 +84,9 @@ jobs:
           APK_SIZE=$(stat -c%s build/outputs/apk/playstore/debug/*.apk)
           echo "Debug APK Size: $(($APK_SIZE / 1024 / 1024)) MB"
         else
-          ls -la build/outputs/apk/playstore/release/
-          file build/outputs/apk/playstore/release/*.apk
-          APK_SIZE=$(stat -c%s build/outputs/apk/playstore/release/*.apk)
+          ls -la build/outputs/apk/playstore/debug/
+          file build/outputs/apk/playstore/debug/*.apk
+          APK_SIZE=$(stat -c%s build/outputs/apk/playstore/debug/*.apk)
           echo "Release APK Size: $(($APK_SIZE / 1024 / 1024)) MB"
         fi
         
@@ -101,7 +101,7 @@ jobs:
       if: matrix.build-type == 'release' && github.event_name == 'release'
       uses: softprops/action-gh-release@v1
       with:
-        files: build/outputs/apk/playstore/release/*.apk
+        files: build/outputs/apk/playstore/debug/*.apk
         name: "ZoraText ${{ github.event.release.tag_name }} - System Font Integration"
         body: |
           # ZoraText Professional Edition v2.0.0
@@ -170,6 +170,6 @@ jobs:
       with:
         name: apk-${{ matrix.build-type }}-${{ github.run_number }}
         path: |
-          build/outputs/apk/playstore/${{ matrix.build-type }}/*.apk
-          build/outputs/apk/playstore/${{ matrix.build-type }}/output-metadata.json
+          build/outputs/apk/playstore/debug/*.apk
+          build/outputs/apk/playstore/debug/output-metadata.json
         retention-days: 30
