@@ -308,16 +308,7 @@ class BasicThemeProvider(val context: Context, val colorScheme: KeyboardColorSch
         val advanced = colorScheme.extended.advancedThemeOptions
         displayDpi = context.resources.displayMetrics.densityDpi
 
-        val customFontName = context.getSettingBlocking(KEYBOARD_FONT_KEY)
-        themeTypeface = if (customFontName.isNotEmpty()) {
-            try {
-                Typeface.createFromAsset(context.assets, "fonts/$customFontName")
-            } catch (e: Exception) {
-                advanced.font
-            }
-        } else {
-            advanced.font
-        }
+        themeTypeface = advanced.font
 
         expertMode = context.getSettingBlocking(HiddenKeysSetting)
         keyBorders = advanced.keyBorders ?: context.getSettingBlocking(KeyBordersSetting)

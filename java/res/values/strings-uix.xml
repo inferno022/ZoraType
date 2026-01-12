@@ -491,8 +491,8 @@
     <!-- Theme, as in visual style -->
     <string name="theme_settings_title">Theme</string>
     
-    <!-- Font settings -->
-    <string name="font_settings_title">Fonts</string>
+    <!-- System fonts -->
+    <string name="system_fonts_title">System Fonts</string>
     
     <!-- Theme names -->
     <string name="ivory_turquoise_theme_name">Ivory Turquoise</string>
@@ -650,6 +650,4 @@ Default is %1$s</string>
     <!-- %1$s will be replaced with the custom dictionary name -->
     <string name="personal_dictionary_delete_additional_file_text">%1$s will be deleted</string>
     <!-- Font selection -->
-    <string name="settings_font_picker_title">Keyboard Font</string>
-    <string name="settings_font_none">Default</string>
 </resources>

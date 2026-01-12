@@ -63,7 +63,7 @@ import org.futo.inputmethod.latin.uix.settings.pages.pdict.PersonalDictionaryLan
 import org.futo.inputmethod.latin.uix.settings.pages.pdict.PersonalDictionaryLanguageListForLocale
 import org.futo.inputmethod.latin.uix.settings.pages.pdict.WordPopupDialogF
 import org.futo.inputmethod.latin.uix.settings.pages.themes.DeleteCustomThemeDialog
-import org.futo.inputmethod.latin.uix.settings.pages.themes.FontPickerScreen
+import org.futo.inputmethod.latin.uix.settings.pages.themes.SystemFontInstaller
 import org.futo.inputmethod.latin.uix.urlDecode
 import org.futo.inputmethod.latin.uix.urlEncode
 
@@ -144,8 +144,7 @@ fun SettingsNavigator(
             composable("keyboardAndTyping") { KeyboardAndTypingScreen(navController) }
             composable("resize") { ResizeScreen(navController) }
             composable("themes") { ThemeScreen(navController) }
-            composable("fonts") { FontPickerScreen(navController) }
-            composable("fontPicker") { FontPickerScreen(navController) }
+            composable("systemFonts") { SystemFontInstaller(navController) }
             composable("customTheme/{uri}") { CustomThemeScreen(it.arguments?.getString("uri") ?: "", navController) }
 
             composable("developer") { DeveloperScreen(navController) }

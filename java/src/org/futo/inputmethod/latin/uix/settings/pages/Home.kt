@@ -126,9 +126,9 @@ val HomeScreenLite = UserSettingsMenu(
         ),
 
         userSettingNavigationItem(
-            title = R.string.font_settings_title,
+            title = R.string.system_fonts_title,
             style = NavigationItemStyle.HomePrimary,
-            navigateTo = "fonts",
+            navigateTo = "systemFonts",
             icon = R.drawable.type
         ),
 

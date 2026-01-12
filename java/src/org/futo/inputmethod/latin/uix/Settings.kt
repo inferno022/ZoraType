@@ -388,8 +388,3 @@ val SHOW_EMOJI_SUGGESTIONS = SettingsKey(
     key = booleanPreferencesKey("suggestEmojis"),
     default = true
 )
-
-val KEYBOARD_FONT_KEY = SettingsKey(
-    key = stringPreferencesKey("keyboardFont"),
-    default = ""
-)
