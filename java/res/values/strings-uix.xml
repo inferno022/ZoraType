@@ -493,6 +493,7 @@
     
     <!-- System fonts -->
     <string name="system_fonts_title">System Fonts</string>
+    <string name="font_accessibility_service_description">ZoraText Font Overlay - Applies custom fonts system-wide in supported apps like WhatsApp, Twitter, Instagram, and more. Enable this service to use custom fonts across all your favorite apps without root access.</string>
     
     <!-- Theme names -->
     <string name="ivory_turquoise_theme_name">Ivory Turquoise</string>

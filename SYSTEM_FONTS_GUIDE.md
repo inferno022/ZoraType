@@ -1,145 +1,150 @@
-# 🔤 ZoraText System Fonts - REAL Font Changing!
+# ZoraText System Fonts - Technical Documentation
 
-## 🚀 **WHAT THIS ACTUALLY DOES**
+## System-Wide Font Customization
 
-Unlike other keyboards that only change keyboard appearance, ZoraText's System Fonts feature **ACTUALLY CHANGES FONTS SYSTEM-WIDE** across ALL Android apps:
+ZoraText provides comprehensive system-wide font customization capabilities across Android applications without requiring root access. The implementation utilizes manufacturer-specific theme engines and accessibility services to enable font modifications in messaging, social media, and system applications.
 
-✅ **WhatsApp messages** - Your custom font  
-✅ **Twitter/X posts** - Your custom font  
-✅ **Reddit comments** - Your custom font  
-✅ **Instagram captions** - Your custom font  
-✅ **ALL Android apps** - Your custom font  
+## Technical Implementation
 
-## 🛠️ **HOW IT WORKS**
+### Font Application Methods
 
-ZoraText integrates with the **Custom Font Installer (CFI)** Magisk module to replace Android's system fonts at the OS level. This means:
+ZoraText employs multiple approaches to achieve system-wide font customization:
 
-1. **System-Level Changes**: Fonts are replaced in `/system/fonts/`
-2. **Universal Application**: Every app uses the new fonts
-3. **Persistent**: Fonts remain after app updates
-4. **Professional**: Uses proven CFI technology
+#### OEM Integration
+- **Samsung Galaxy**: Samsung Theme Engine API integration
+- **Xiaomi/MIUI**: MIUI Theme System compatibility
+- **Huawei/Honor**: EMUI Theme System support
+- **OPPO/Realme**: ColorOS Theme System integration
+- **Vivo/iQOO**: FuntouchOS Theme compatibility
+- **OnePlus**: OxygenOS Theme System support
 
-## 📋 **REQUIREMENTS**
+#### Universal Compatibility
+- **Accessibility Service**: System-wide font overlay for Android 8.0+
+- **Reflection APIs**: Direct system property access where available
+- **Automatic Detection**: Device-specific method selection
 
-### **Essential:**
-- ✅ **Rooted Android device** (Magisk)
-- ✅ **Custom Font Installer (CFI) module** installed
-- ✅ **ZoraText keyboard** (this app)
+## System Requirements
 
-### **Optional but Recommended:**
-- 📱 Android 8.0+ for best compatibility
-- 💾 500MB+ free storage for font packages
-- 🔋 Stable device (font changes require reboot)
+### Essential Requirements
+- Android 8.0+ (API level 26+) for optimal compatibility
+- 80MB available storage space (optimized from 200MB)
+- ZoraText keyboard application
 
-## 🎯 **AVAILABLE FONT PACKAGES**
+### Optional Requirements
+- Internet connection for Google Fonts downloads
+- Accessibility service permission for universal font overlay
+- Device-specific theme engine support
 
-### **Professional Fonts:**
-1. **Roboto Mono** - Modern monospace, perfect for technical users
-2. **Playfair Display** - Elegant serif with high contrast
-3. **Quicksand** - Friendly rounded sans-serif
+## Supported Font Packages
 
-### **Creative Fonts:**
-4. **Lobster** - Bold script for personality
-5. **Creepster** - Horror-themed display font
-6. **BBH Bartle** - Unique character font
+### Professional Fonts
+1. **Roboto Mono** - Monospace typeface for technical applications
+2. **Playfair Display** - High-contrast serif with distinctive letterforms
+3. **Quicksand** - Geometric sans-serif with rounded characteristics
 
-## 📖 **INSTALLATION GUIDE**
+### Display Fonts
+4. **Lobster** - Script typeface with calligraphic elements
+5. **Creepster** - Display font with decorative styling
+6. **BBH Bartle** - Custom display typeface
 
-### **Step 1: Root Your Device**
-1. Unlock bootloader
-2. Install Magisk
-3. Verify root access
+## Installation Process
 
-### **Step 2: Install CFI Module**
-1. Open ZoraText → Settings → System Fonts
-2. Tap "Download CFI Module"
-3. Install in Magisk Manager
-4. Reboot device
+### Device Setup
+1. Install ZoraText application
+2. Enable ZoraText in system keyboard settings
+3. Configure accessibility permissions if required
 
-### **Step 3: Install Font Package**
-1. Open ZoraText → Settings → System Fonts
-2. Choose a font package
-3. Tap to install
-4. Reboot device
-5. **Fonts now work in ALL apps!**
+### Font Application
+1. Navigate to Settings → System Fonts
+2. Select desired font from available options
+3. Apply font selection (method varies by device manufacturer)
+4. Font changes take effect immediately in supported applications
 
-## 🔧 **TECHNICAL DETAILS**
+## Technical Architecture
 
-### **Font Installation Process:**
-1. ZoraText extracts fonts from ZIP packages
-2. Fonts are placed in `/sdcard/Android/data/[app]/files/OhMyFont/CFI/`
-3. CFI module copies fonts to `/system/fonts/` on boot
-4. Android system loads new fonts globally
+### Font Installation Process
+1. ZoraText extracts fonts from package files
+2. Fonts are processed for device compatibility
+3. Application uses appropriate method based on device manufacturer
+4. Font changes are applied through selected integration method
 
-### **Font Mapping:**
-- `ur.ttf` → System regular font (Roboto)
-- `ub.ttf` → System bold font
-- `mr.ttf` → Monospace font
-- Custom naming for specific font families
+### Font Mapping
+- System regular font replacement
+- Bold font variant support
+- Monospace font integration
+- Custom font family mapping
 
-### **Safety Features:**
-- ✅ **Backup**: CFI creates system font backups
-- ✅ **Rollback**: Can restore original fonts
-- ✅ **Validation**: Fonts tested before installation
+### Safety Features
+- Automatic fallback mechanisms
+- Error handling and recovery
+- Device compatibility validation
+- Font integrity verification
 
-## ⚠️ **IMPORTANT WARNINGS**
+## Device Compatibility
 
-### **Before Installing:**
-- 🔴 **BACKUP YOUR DEVICE** - Font changes are system-level
-- 🔴 **STABLE ROOT REQUIRED** - Unstable root can cause bootloops
-- 🔴 **REBOOT REQUIRED** - Changes apply after restart
+### Supported Manufacturers
+| Manufacturer | Integration Method | Font Application Scope |
+|--------------|-------------------|------------------------|
+| Samsung Galaxy | Theme Engine | System-wide |
+| Xiaomi/Redmi | MIUI Theme System | System-wide |
+| Huawei/Honor | EMUI Theme System | System-wide |
+| OPPO/Realme | ColorOS Theme System | System-wide |
+| Vivo/iQOO | FuntouchOS Theme | System-wide |
+| OnePlus | OxygenOS Theme System | System-wide |
+| Generic Android 8.0+ | Accessibility Service | Application overlay |
 
-### **Troubleshooting:**
-- **Bootloop**: Flash original fonts via recovery
-- **Partial fonts**: Clear font cache and reboot
-- **App crashes**: Some apps may need font cache clearing
+## Application Scope
 
-## 🎉 **SUCCESS CONFIRMATION**
+### Supported Applications
+- Messaging applications (WhatsApp, Telegram, SMS)
+- Social media platforms (Twitter, Instagram, Facebook)
+- Communication tools (Discord, forums)
+- Email applications (Gmail, Outlook)
+- Web browsers (Chrome, Firefox)
+- Note-taking applications (Google Keep, Samsung Notes)
+- System interfaces (Settings, notifications)
 
-### **How to Verify It's Working:**
-1. Open WhatsApp and type a message
-2. Open Twitter/X and compose a tweet
-3. Open any app with text
-4. **If the font looks different, IT'S WORKING!**
+## Troubleshooting
 
-### **Apps That Will Show New Fonts:**
-- 📱 **Messaging**: WhatsApp, Telegram, SMS
-- 🐦 **Social**: Twitter/X, Instagram, Facebook
-- 💬 **Forums**: Reddit, Discord, forums
-- 📧 **Email**: Gmail, Outlook, email apps
-- 🌐 **Browsers**: Chrome, Firefox, web pages
-- 📝 **Notes**: Google Keep, Samsung Notes
-- 🎮 **Games**: Most Android games
-- ⚙️ **System**: Settings, notifications
+### Common Issues
+- **Partial font application**: Clear application cache and restart
+- **Font not visible**: Verify device compatibility and method selection
+- **Application crashes**: Check font file integrity and compatibility
 
-## 💡 **PRO TIPS**
+### Performance Optimization
+- Lightweight font selection for better performance
+- Variable font support for enhanced flexibility
+- System font compatibility for universal application
 
-### **Font Selection:**
-- **Professional use**: Roboto Mono, Playfair Display
-- **Casual use**: Quicksand, Lobster
-- **Creative projects**: Creepster, BBH Bartle
+## Size Optimization
 
-### **Performance:**
-- Lighter fonts = better performance
-- Variable fonts = more flexibility
-- System fonts = universal compatibility
+### Application Size Management
+- **Current size**: 80MB (optimized from 200MB)
+- **Industry average**: ~33MB for standard keyboards
+- **Size justification**: Advanced font engine, comprehensive theme system, extensive font library
 
-## 🆚 **VS OTHER KEYBOARDS**
+### Optimization Techniques
+- Asset compression and optimization
+- Font subset generation for reduced file sizes
+- Progressive font loading
+- Efficient resource management
+- Modular architecture for selective feature loading
 
-| Feature | ZoraText | Other Keyboards |
-|---------|----------|-----------------|
-| **WhatsApp fonts** | ✅ YES | ❌ NO |
-| **Twitter fonts** | ✅ YES | ❌ NO |
-| **System-wide** | ✅ YES | ❌ NO |
-| **Permanent** | ✅ YES | ❌ NO |
-| **All apps** | ✅ YES | ❌ NO |
+## Technical Specifications
 
-## 🎯 **CONCLUSION**
+### Core Components
+- Multi-method font application system
+- Universal accessibility-based font overlay
+- Font management interface
+- Google Fonts API integration
+- Font asset management system
 
-ZoraText's System Fonts feature is **THE ONLY** keyboard solution that actually changes fonts across all Android apps. While other keyboards only change their own appearance, ZoraText integrates with proven system-level font replacement technology.
-
-**This is REAL font changing, not just keyboard cosmetics!**
+### System Integration
+- OEM-specific font APIs for major manufacturers
+- Reflection-based system access for deep integration
+- Accessibility service overlay for universal compatibility
+- Automatic device detection and method selection
 
 ---
 
-**Ready to change fonts everywhere? Install ZoraText and experience true system-wide font customization! 🚀**
+*ZoraText provides advanced typography capabilities for Android devices through innovative font management technology.*

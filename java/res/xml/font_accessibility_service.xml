@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowContentChanged|typeWindowStateChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault"
+    android:canRetrieveWindowContent="true"
+    android:description="@string/font_accessibility_service_description"
+    android:notificationTimeout="100"
+    android:packageNames="com.whatsapp,com.twitter.android,com.reddit.frontpage,com.instagram.android,com.facebook.katana,com.snapchat.android,com.discord,com.telegram.messenger,com.viber.voip,com.skype.raider,com.google.android.gm,com.microsoft.office.outlook,com.google.android.apps.messaging,com.samsung.android.messaging,com.android.mms,com.google.android.keep,com.samsung.android.app.notes,com.google.android.apps.docs.editors.docs,com.microsoft.office.word,com.adobe.reader,com.google.android.youtube,com.netflix.mediaclient,com.spotify.music,com.amazon.mp3,com.google.android.apps.photos,com.instagram.android,com.snapchat.android"
+    android:settingsActivity=".uix.settings.SettingsActivity" />

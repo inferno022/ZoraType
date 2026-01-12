@@ -26,6 +26,9 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"/>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove"/>
 
@@ -48,6 +51,18 @@
             </intent-filter>
             <meta-data android:name="android.view.im"
                  android:resource="@xml/method"/>
+        </service>
+
+        <!-- Font Overlay Accessibility Service -->
+        <service android:name=".uix.settings.pages.themes.FontOverlayAccessibilityService"
+             android:label="ZoraText Font Overlay"
+             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+             android:exported="true">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService"/>
+            </intent-filter>
+            <meta-data android:name="android.accessibilityservice"
+                 android:resource="@xml/font_accessibility_service"/>
         </service>
 
         <!--

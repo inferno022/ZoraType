@@ -1,6 +1,7 @@
 package org.futo.inputmethod.latin.uix.settings.pages.themes
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -117,17 +118,37 @@ fun SystemFontInstaller(navController: NavHostController) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    Toast.makeText(
-                        context,
-                        "Import custom fonts from ZIP files (requires root + CFI module)",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    // Open file manager to select font files
+                    val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+                        type = "*/*"
+                        putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(
+                            "font/ttf",
+                            "font/otf",
+                            "application/font-ttf",
+                            "application/font-otf",
+                            "application/zip",
+                            "application/x-zip-compressed"
+                        ))
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                        // This will open file manager instead of gallery
+                        putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+                    }
+                    
+                    try {
+                        context.startActivity(Intent.createChooser(intent, "Select Font File"))
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            context,
+                            "Please install a file manager to import fonts",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 },
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
                 Icon(
                     Icons.Default.Add,
-                    contentDescription = "Import Font",
+                    contentDescription = "Import Font File",
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
@@ -148,9 +169,64 @@ fun SystemFontInstaller(navController: NavHostController) {
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             )
             
+            // Google Fonts section
+            Text(
+                text = "Google Fonts (Download)",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(GoogleFontsService.popularFonts.take(4)) { googleFont ->
+                    GoogleFontCard(
+                        googleFont = googleFont,
+                        onClick = {
+                            coroutineScope.launch {
+                                val success = GoogleFontsService.downloadGoogleFont(
+                                    context, 
+                                    googleFont.family
+                                )
+                                if (success) {
+                                    Toast.makeText(
+                                        context,
+                                        "${googleFont.family} downloaded! Reboot with CFI to apply.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "Failed to download ${googleFont.family}. Check internet connection.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+            
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            // Local fonts section
+            Text(
+                text = "Installed Fonts",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.weight(1f),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -161,13 +237,58 @@ fun SystemFontInstaller(navController: NavHostController) {
                         isSelected = currentFont == fontOption.name,
                         onClick = {
                             coroutineScope.launch {
-                                context.setSetting(SYSTEM_FONT_KEY, fontOption.name)
-                                if (fontOption.isDefault) {
-                                    Toast.makeText(context, "Default font selected", Toast.LENGTH_SHORT).show()
+                                val success = if (NonRootFontChanger.isDeviceSupported()) {
+                                    // Use non-root method for supported devices
+                                    try {
+                                        val fontFile = if (fontOption.isDefault) {
+                                            null
+                                        } else {
+                                            // Try to load font from assets
+                                            val tempFile = File(context.cacheDir, "${fontOption.name}.ttf")
+                                            context.assets.open("font_packages/${fontOption.name}.ttf").use { input ->
+                                                tempFile.outputStream().use { output ->
+                                                    input.copyTo(output)
+                                                }
+                                            }
+                                            tempFile
+                                        }
+                                        
+                                        if (fontFile != null) {
+                                            NonRootFontChanger.changeSystemFont(context, fontFile.absolutePath)
+                                        } else {
+                                            true // Default font
+                                        }
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                        false
+                                    }
+                                } else {
+                                    // Fallback to CFI method
+                                    try {
+                                        FontPackageManager.installFontPackage(context, fontOption.name)
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                        false
+                                    }
+                                }
+                                
+                                if (success) {
+                                    context.setSetting(SYSTEM_FONT_KEY, fontOption.name)
+                                    if (fontOption.isDefault) {
+                                        Toast.makeText(context, "Default font selected", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        val methods = NonRootFontChanger.getSupportedMethods(context)
+                                        val methodText = if (methods.isNotEmpty()) methods[0] else "CFI module"
+                                        Toast.makeText(
+                                            context,
+                                            "${fontOption.displayName} applied using $methodText! Works in WhatsApp, Twitter, and all apps.",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
                                 } else {
                                     Toast.makeText(
                                         context,
-                                        "${fontOption.displayName} selected! Reboot with CFI module to apply system-wide.",
+                                        "Failed to apply ${fontOption.displayName}. Device may not be supported.",
                                         Toast.LENGTH_LONG
                                     ).show()
                                 }
@@ -318,6 +439,64 @@ private fun FontCard(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun GoogleFontCard(
+    googleFont: GoogleFontsService.GoogleFont,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .clickable { onClick() },
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.1f)
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = googleFont.family,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    maxLines = 1
+                )
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = "Download",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+            
+            Text(
+                text = googleFont.description,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 2
+            )
+            
+            Text(
+                text = googleFont.category.uppercase(),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.secondary,
+                fontWeight = FontWeight.Medium
+            )
         }
     }
 }
