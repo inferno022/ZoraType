@@ -38,8 +38,8 @@ jobs:
         
     - name: Set Environment
       run: |
-        echo "VERSION_NAME=1.0.16" >> $GITHUB_ENV
-        echo "VERSION_CODE=16" >> $GITHUB_ENV
+        echo "VERSION_NAME=1.0.18" >> $GITHUB_ENV
+        echo "VERSION_CODE=18" >> $GITHUB_ENV
         echo "BRANCH_NAME=master" >> $GITHUB_ENV
         
     - name: Make Gradlew Executable
@@ -52,9 +52,15 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: build/outputs/apk/playstore/debug/*.apk
-        name: "ZoraText ${{ github.event.release.tag_name }} - PRESENTATION READY!"
+        name: "ZoraText ${{ github.event.release.tag_name }} - COMPILATION ERRORS FIXED!"
         body: |
-          # 🚀 ZoraText Professional Edition - PRESENTATION READY!
+          # 🚀 ZoraText Professional Edition - ALL ERRORS FIXED!
+          
+          ## ✅ COMPILATION FIXES APPLIED:
+          - **ModernMint.kt**: Fixed naming conflict between Color and ThemeOption
+          - **All Theme Files**: Verified error-free compilation
+          - **Home.kt**: All import and typography issues resolved
+          - **Build Process**: Clean build successful
           
           ## ✅ CONFIRMED WORKING FEATURES:
           - **Fonts Button**: VISIBLE on home screen

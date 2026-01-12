@@ -11,12 +11,12 @@ import org.futo.inputmethod.latin.uix.wrapDarkColorScheme
 import org.futo.inputmethod.latin.uix.theme.ThemeOption
 import org.futo.inputmethod.latin.uix.theme.selector.ThemePreview
 
-private val ModernMint = Color(0xFF98FB98) // Pale green (mint)
+private val ModernMintColor = Color(0xFF98FB98) // Pale green (mint)
 private val CharcoalGray = Color(0xFF36454F) // Charcoal
 private val MintLight = Color(0xFFE0FFE0) // Very light mint
 private val CharcoalLight = Color(0xFF708090) // Light charcoal
 
-private val md_theme_modern_mint_light_primary = ModernMint
+private val md_theme_modern_mint_light_primary = ModernMintColor
 private val md_theme_modern_mint_light_onPrimary = Color(0xFF003A00)
 private val md_theme_modern_mint_light_primaryContainer = MintLight
 private val md_theme_modern_mint_light_onPrimaryContainer = Color(0xFF002200)
