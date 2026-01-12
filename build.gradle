@@ -362,17 +362,6 @@ android {
             manifest.srcFile 'java/playstore/AndroidManifest.xml'
         }
 
-        stable {
-            java.srcDirs = ['common/src', 'java/src', 'java/stable/java']
-            manifest.srcFile 'java/stable/AndroidManifest.xml'
-        }
-
-        unstable {
-            java.srcDirs = ['common/src', 'java/src', 'java/stable/java']
-            manifest.srcFile 'java/stable/AndroidManifest.xml'
-            res.srcDirs = ['java/unstable/res', translationsWithoutEngValues('translations/devbuild')]
-        }
-
         androidTest {
             res.srcDirs = ['tests/res']
             java.srcDirs = ['tests/src']
@@ -429,10 +418,11 @@ dependencies {
     implementation 'androidx.autofill:autofill:1.1.0'
     implementation 'androidx.window:window:1.3.0'
 
-    stableImplementation 'ch.acra:acra-mail:5.11.1'
-    stableImplementation 'ch.acra:acra-dialog:5.11.1'
-    unstableImplementation 'ch.acra:acra-mail:5.11.1'
-    unstableImplementation 'ch.acra:acra-dialog:5.11.1'
+    // ACRA crash reporting (only for playstore flavor now)
+    // stableImplementation 'ch.acra:acra-mail:5.11.1'
+    // stableImplementation 'ch.acra:acra-dialog:5.11.1'
+    // unstableImplementation 'ch.acra:acra-mail:5.11.1'
+    // unstableImplementation 'ch.acra:acra-dialog:5.11.1'
 
     implementation 'sh.calvin.reorderable:reorderable:2.2.0'
 
