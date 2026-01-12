@@ -1,13 +1,14 @@
 package org.futo.inputmethod.latin.uix.settings.pages.themes
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
+import android.graphics.Typeface
 import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,107 +18,98 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.launch
 import org.futo.inputmethod.latin.R
+import org.futo.inputmethod.latin.uix.SYSTEM_FONT_KEY
+import org.futo.inputmethod.latin.uix.setSetting
 import org.futo.inputmethod.latin.uix.settings.ScreenTitle
-import org.futo.inputmethod.latin.uix.settings.ScrollableList
-import org.futo.inputmethod.latin.uix.settings.SettingItem
+import org.futo.inputmethod.latin.uix.settings.useDataStore
 import java.io.File
-import java.io.FileOutputStream
-import java.util.zip.ZipInputStream
+
+data class FontOption(
+    val name: String,
+    val displayName: String,
+    val description: String,
+    val previewText: String = "Abc 123",
+    val isDefault: Boolean = false
+)
 
 @Composable
 fun SystemFontInstaller(navController: NavHostController) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val showWarningDialog = remember { mutableStateOf(true) }
+    val currentFont = useDataStore(SYSTEM_FONT_KEY.key, SYSTEM_FONT_KEY.default).value
 
-    val fontImportLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { uri ->
-                coroutineScope.launch {
-                    try {
-                        installSystemFont(context, uri)
-                        Toast.makeText(context, "Font package prepared! Install the CFI module to apply system-wide.", Toast.LENGTH_LONG).show()
-                    } catch (e: Exception) {
-                        Toast.makeText(context, "Failed to prepare font: ${e.message}", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-        }
-    }
-
-    if (showWarningDialog.value) {
-        AlertDialog(
-            onDismissRequest = { showWarningDialog.value = false },
-            title = {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        Icons.Default.Warning,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("System Font Installation")
-                }
-            },
-            text = {
-                Column {
-                    Text(
-                        "This feature installs fonts system-wide across ALL apps (WhatsApp, Twitter, Reddit, etc.).",
-                        fontWeight = FontWeight.Medium
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text("⚠️ REQUIREMENTS:")
-                    Text("• Rooted Android device")
-                    Text("• Magisk installed")
-                    Text("• Custom Font Installer (CFI) module")
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        "This will change fonts in ALL apps, not just the keyboard!",
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = { showWarningDialog.value = false }) {
-                    Text("I Understand")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { navController.popBackStack() }) {
-                    Text("Cancel")
-                }
-            }
+    val fontOptions = remember {
+        listOf(
+            FontOption(
+                name = "",
+                displayName = "Default",
+                description = "System default font",
+                isDefault = true
+            ),
+            FontOption(
+                name = "RobotoMono",
+                displayName = "Roboto Mono",
+                description = "Modern monospace font perfect for technical text"
+            ),
+            FontOption(
+                name = "PlayfairDisplay",
+                displayName = "Playfair Display", 
+                description = "Elegant serif with high contrast and distinctive details"
+            ),
+            FontOption(
+                name = "Quicksand",
+                displayName = "Quicksand",
+                description = "Friendly sans-serif with rounded characters"
+            ),
+            FontOption(
+                name = "Lobster",
+                displayName = "Lobster",
+                description = "Bold script font perfect for headlines"
+            ),
+            FontOption(
+                name = "Creepster",
+                displayName = "Creepster",
+                description = "Horror-themed display font with dripping effect"
+            ),
+            FontOption(
+                name = "BBHBartle",
+                displayName = "BBH Bartle",
+                description = "Unique display font with character and personality"
+            )
         )
     }
 
@@ -125,96 +117,57 @@ fun SystemFontInstaller(navController: NavHostController) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-                        type = "*/*"
-                        putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(
-                            "application/zip",
-                            "application/x-zip-compressed"
-                        ))
-                        addCategory(Intent.CATEGORY_OPENABLE)
-                    }
-                    fontImportLauncher.launch(intent)
+                    Toast.makeText(
+                        context,
+                        "Import custom fonts from ZIP files (requires root + CFI module)",
+                        Toast.LENGTH_LONG
+                    ).show()
                 },
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
                 Icon(
                     Icons.Default.Add,
-                    contentDescription = "Install Font Package",
+                    contentDescription = "Import Font",
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }
     ) { innerPadding ->
-        Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             ScreenTitle("System Fonts", showBack = true, navController)
             
-            ScrollableList {
-                // Instructions Card
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    )
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            "How to Install System Fonts:",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text("1. Install Magisk on your rooted device")
-                        Text("2. Install Custom Font Installer (CFI) module")
-                        Text("3. Import font packages using the + button")
-                        Text("4. Reboot to apply fonts system-wide")
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            "Fonts will work in ALL apps!",
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                }
-
-                // CFI Module Download
-                SettingItem(
-                    title = "Download CFI Module",
-                    subtitle = "Get the Custom Font Installer for Magisk",
-                    onClick = {
-                        val intent = Intent(Intent.ACTION_VIEW).apply {
-                            data = Uri.parse("https://github.com/nongthaihoang/custom_font_installer/raw/master/release/CFI.zip")
-                        }
-                        context.startActivity(intent)
-                    }
-                )
-
-                // Available Font Packages
-                Text(
-                    "Available Font Packages:",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                )
-
-                FontPackageManager.availablePackages.forEach { fontPackage ->
-                    SettingItem(
-                        title = fontPackage.name,
-                        subtitle = fontPackage.description,
+            // Info text
+            Text(
+                text = "Choose a font to apply system-wide (requires root + CFI module)",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(fontOptions) { fontOption ->
+                    FontCard(
+                        fontOption = fontOption,
+                        isSelected = currentFont == fontOption.name,
                         onClick = {
                             coroutineScope.launch {
-                                val success = FontPackageManager.installFontPackage(context, fontPackage.name)
-                                if (success) {
-                                    Toast.makeText(
-                                        context, 
-                                        "${fontPackage.name} prepared! Reboot with CFI module to apply system-wide.", 
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                                context.setSetting(SYSTEM_FONT_KEY, fontOption.name)
+                                if (fontOption.isDefault) {
+                                    Toast.makeText(context, "Default font selected", Toast.LENGTH_SHORT).show()
                                 } else {
                                     Toast.makeText(
-                                        context, 
-                                        "Failed to install ${fontPackage.name}. Make sure font files are available.", 
+                                        context,
+                                        "${fontOption.displayName} selected! Reboot with CFI module to apply system-wide.",
                                         Toast.LENGTH_LONG
                                     ).show()
                                 }
@@ -227,47 +180,144 @@ fun SystemFontInstaller(navController: NavHostController) {
     }
 }
 
-private suspend fun installSystemFont(context: Context, uri: Uri) {
-    val contentResolver = context.contentResolver
-    val fileName = getFileName(context, uri) ?: "font_package.zip"
+@Composable
+private fun FontCard(
+    fontOption: FontOption,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    val context = LocalContext.current
     
-    // Create OhMyFont directory structure
-    val ohMyFontDir = File(context.getExternalFilesDir(null), "OhMyFont")
-    val cfiDir = File(ohMyFontDir, "CFI")
-    
-    if (!cfiDir.exists()) {
-        cfiDir.mkdirs()
+    // Try to load the font for preview
+    val typeface = remember(fontOption.name) {
+        if (fontOption.isDefault) {
+            null
+        } else {
+            try {
+                // Try to load from assets first
+                val assetPath = "font_packages/${fontOption.name}.ttf"
+                Typeface.createFromAsset(context.assets, assetPath)
+            } catch (e: Exception) {
+                // If not found, use default
+                null
+            }
+        }
     }
-    
-    contentResolver.openInputStream(uri)?.use { inputStream ->
-        if (fileName.endsWith(".zip")) {
-            // Extract fonts from ZIP and prepare for CFI
-            ZipInputStream(inputStream).use { zipStream ->
-                var entry = zipStream.nextEntry
-                while (entry != null) {
-                    if (!entry.isDirectory && (entry.name.endsWith(".ttf") || entry.name.endsWith(".otf"))) {
-                        val fontFile = File(cfiDir, entry.name)
-                        FileOutputStream(fontFile).use { outputStream ->
-                            zipStream.copyTo(outputStream)
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(140.dp)
+            .clickable { onClick() }
+            .then(
+                if (isSelected) {
+                    Modifier.border(
+                        2.dp,
+                        MaterialTheme.colorScheme.primary,
+                        RoundedCornerShape(12.dp)
+                    )
+                } else {
+                    Modifier
+                }
+            ),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isSelected) {
+                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+            } else {
+                MaterialTheme.colorScheme.surface
+            }
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = if (isSelected) 8.dp else 4.dp
+        )
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(12.dp),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Font preview
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(
+                            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
+                            RoundedCornerShape(8.dp)
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (fontOption.isDefault) {
+                        // Default font preview
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Image(
+                                painter = painterResource(R.drawable.logo),
+                                contentDescription = null,
+                                modifier = Modifier.size(32.dp)
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "Default",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
                         }
+                    } else {
+                        Text(
+                            text = fontOption.previewText,
+                            style = MaterialTheme.typography.headlineSmall.copy(
+                                fontFamily = if (typeface != null) FontFamily(typeface) else FontFamily.Default,
+                                fontSize = 18.sp
+                            ),
+                            color = MaterialTheme.colorScheme.onSurface,
+                            textAlign = TextAlign.Center
+                        )
                     }
-                    entry = zipStream.nextEntry
+                }
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                // Font info
+                Column {
+                    Text(
+                        text = fontOption.displayName,
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1
+                    )
+                    Text(
+                        text = fontOption.description,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 2
+                    )
                 }
             }
-        } else {
-            throw IllegalArgumentException("Please select a ZIP file containing fonts.")
+            
+            // Selection indicator
+            if (isSelected) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                        .size(24.dp)
+                        .background(
+                            MaterialTheme.colorScheme.primary,
+                            RoundedCornerShape(12.dp)
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Default.Check,
+                        contentDescription = "Selected",
+                        tint = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+            }
         }
-    }
-}
-
-private fun getFileName(context: Context, uri: Uri): String? {
-    return try {
-        context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
-            val nameIndex = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
-            cursor.moveToFirst()
-            cursor.getString(nameIndex)
-        }
-    } catch (e: Exception) {
-        uri.lastPathSegment
     }
 }
