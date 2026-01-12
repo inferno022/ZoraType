@@ -194,7 +194,7 @@ android {
         }
     }
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += [
                 'META-INF/DEPENDENCIES',
@@ -296,7 +296,7 @@ android {
         it.buildConfigField "String", "GOOGLEPAY_PRICE", "\"~\$11.99\""
     }
 
-    flavorDimensions = ["buildType"]
+    flavorDimensions "buildType"
 
     productFlavors {
         unstable {
@@ -308,7 +308,7 @@ android {
             buildConfigField "boolean", "UPDATE_CHECKING", "true"
             buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
             buildConfigField "String", "BRANCH", "\"${getBranch()}\""
-            getIsDefault().set(true)
+            isDefault = true
 
             buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
         }
@@ -379,11 +379,11 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         checkReleaseBuilds false
     }
 
-    aaptOptions {
+    androidResources {
         noCompress 'dict'
     }
 

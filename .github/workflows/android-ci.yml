@@ -70,11 +70,11 @@ jobs:
       
     - name: Build Debug APK
       if: matrix.build-type == 'debug'
-      run: ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace
+      run: ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --warning-mode all
       
     - name: Build Release APK
       if: matrix.build-type == 'release'
-      run: ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace
+      run: ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --warning-mode all
       
     - name: Verify Build Output
       run: |
