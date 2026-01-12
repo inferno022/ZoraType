@@ -624,7 +624,7 @@ struct LanguageModelState {
         // TODO: This should really not be here
         is_bugged = true;
         for(const auto &seq : sequences) {
-            if(seq.second.tokens.front() > 48 || seq.first != sequences[0].first) {
+            if(seq.second.tokens.front() > 48 || std::abs(seq.first - sequences[0].first) > 1e-9) {
                 is_bugged = false;
                 break;
             }

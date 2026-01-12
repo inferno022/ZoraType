@@ -1,3 +1,12 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "cSpell.enabled": false,
+    "spellright.language": [],
+    "spellright.documentTypes": [],
+    "files.associations": {
+        "*.kt": "kotlin",
+        "*.java": "java",
+        "*.gradle": "gradle",
+        "*.md": "markdown"
+    }
 }
