@@ -49,7 +49,7 @@ jobs:
       run: chmod +x gradlew
       
     - name: Run Lint
-      run: ./gradlew lintPlaystoreDebug --no-daemon
+      run: ./gradlew lintDebug --no-daemon
       
     - name: Upload Lint Results
       if: always()
@@ -101,7 +101,7 @@ jobs:
       run: chmod +x gradlew
       
     - name: Run Unit Tests
-      run: ./gradlew testPlaystoreDebugUnitTest --no-daemon
+      run: ./gradlew testDebugUnitTest --no-daemon
       
     - name: Upload Test Results
       if: always()
@@ -157,8 +157,8 @@ jobs:
       
     - name: Build Debug APK
       run: |
-        echo "Building Playstore Debug APK..."
-        ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --warning-mode all
+        echo "Building Debug APK..."
+        ./gradlew assembleDebug --no-daemon --stacktrace --warning-mode all
       
     - name: Verify Build
       run: |

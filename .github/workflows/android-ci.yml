@@ -73,29 +73,29 @@ jobs:
         ./gradlew properties | grep -i default || echo "No default found"
       
     - name: Run Tests
-      run: ./gradlew testPlaystoreDebugUnitTest --no-daemon --stacktrace
+      run: ./gradlew testDebugUnitTest --no-daemon --stacktrace
       
     - name: Build Debug APK
       if: matrix.build-type == 'debug'
       run: |
-        echo "Building Playstore Debug APK..."
+        echo "Building Debug APK..."
         echo "Java version:"
         java -version
         echo "Gradle version:"
         ./gradlew --version
         echo "Starting build..."
-        ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --info --warning-mode all
+        ./gradlew assembleDebug --no-daemon --stacktrace --info --warning-mode all
       
     - name: Build Release APK
       if: matrix.build-type == 'release'
       run: |
-        echo "Building Playstore Debug APK (Release configuration)..."
+        echo "Building Debug APK (Release configuration)..."
         echo "Java version:"
         java -version
         echo "Gradle version:"
         ./gradlew --version
         echo "Starting build..."
-        ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --info --warning-mode all
+        ./gradlew assembleDebug --no-daemon --stacktrace --info --warning-mode all
       
     - name: Verify Build Output
       run: |

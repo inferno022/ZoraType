@@ -299,28 +299,29 @@ android {
     flavorDimensions "buildType"
 
     productFlavors {
-        unstable {
-            dimension "buildType"
-            applicationIdSuffix ".unstable"
-            versionNameSuffix "-unstable"
+        // Temporarily disabled to fix CI build issues
+        // unstable {
+        //     dimension "buildType"
+        //     applicationIdSuffix ".unstable"
+        //     versionNameSuffix "-unstable"
 
-            buildConfigField "boolean", "IS_PLAYSTORE_BUILD", "false"
-            buildConfigField "boolean", "UPDATE_CHECKING", "true"
-            buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
-            buildConfigField "String", "BRANCH", "\"${getBranch()}\""
+        //     buildConfigField "boolean", "IS_PLAYSTORE_BUILD", "false"
+        //     buildConfigField "boolean", "UPDATE_CHECKING", "true"
+        //     buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
+        //     buildConfigField "String", "BRANCH", "\"${getBranch()}\""
 
-            buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
-        }
+        //     buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
+        // }
 
-        stable {
-            dimension "buildType"
-            buildConfigField "boolean", "IS_PLAYSTORE_BUILD", "false"
-            buildConfigField "boolean", "UPDATE_CHECKING", "true"
-            buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
-            buildConfigField "String", "BRANCH", "\"${getBranch()}\""
+        // stable {
+        //     dimension "buildType"
+        //     buildConfigField "boolean", "IS_PLAYSTORE_BUILD", "false"
+        //     buildConfigField "boolean", "UPDATE_CHECKING", "true"
+        //     buildConfigField "boolean", "UPDATE_CHECKING_NETWORK", "false"
+        //     buildConfigField "String", "BRANCH", "\"${getBranch()}\""
 
-            buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
-        }
+        //     buildConfigField "String", "PAYMENT_PRICE", "FUTOPAY_PRICE"
+        // }
 
         playstore {
             dimension "buildType"
