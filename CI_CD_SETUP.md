@@ -171,7 +171,7 @@ If you encounter issues:
 1. Check the Actions tab for detailed logs
 2. Verify all secrets are correctly set
 3. Ensure keystore and passwords match
-4. Test locally with `./gradlew assembleUnstableDebug`
+4. Test locally with `./gradlew assemblePlaystoreDebug`
 
 ---
 

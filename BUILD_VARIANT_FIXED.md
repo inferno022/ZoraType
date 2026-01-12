@@ -96,9 +96,9 @@ playstore {
 
 # ✅ SUCCESS - 172.4MB APK generated
 
-# Test unstable variant (should still work)
+# Test playstore variant (should work)
 
-./gradlew assembleUnstableDebug --no-daemon --stacktrace
+./gradlew assemblePlaystoreDebug --no-daemon --stacktrace
 
 # ✅ SUCCESS - No compilation errors
 
