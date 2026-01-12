@@ -269,20 +269,33 @@ android {
             signingConfig signingConfigs.debug
             debuggable true
             
-            // Check if real AAR files exist
-            def hasMozc = file('libs/mozc-release.aar').exists() && file('libs/mozc-release.aar').length() > 100000
-            buildConfigField "boolean", "HAS_MOZC", hasMozc.toString()
-        }
-        release {
-            minifyEnabled false
-            shrinkResources false
-            signingConfig signingConfigs.debug
-            debuggable false
-            zipAlignEnabled true
+            // Performance optimizations for debug builds
+            renderscriptOptimLevel 3
             
             // Check if real AAR files exist
             def hasMozc = file('libs/mozc-release.aar').exists() && file('libs/mozc-release.aar').length() > 100000
             buildConfigField "boolean", "HAS_MOZC", hasMozc.toString()
+            buildConfigField "boolean", "ENABLE_PERFORMANCE_MONITORING", "true"
+            buildConfigField "boolean", "ENABLE_MEMORY_OPTIMIZATION", "true"
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.debug
+            debuggable false
+            zipAlignEnabled true
+            
+            // Advanced performance optimizations for release
+            renderscriptOptimLevel 3
+            
+            // Proguard optimizations
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            
+            // Check if real AAR files exist
+            def hasMozc = file('libs/mozc-release.aar').exists() && file('libs/mozc-release.aar').length() > 100000
+            buildConfigField "boolean", "HAS_MOZC", hasMozc.toString()
+            buildConfigField "boolean", "ENABLE_PERFORMANCE_MONITORING", "false"
+            buildConfigField "boolean", "ENABLE_MEMORY_OPTIMIZATION", "true"
         }
     }
 
