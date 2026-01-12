@@ -187,9 +187,27 @@ jobs:
         ./gradlew tasks --all | grep -i assemble || echo "Could not list assemble tasks"
         echo "Starting build with detailed logging..."
         
+        # Show which files are being excluded/included
+        echo "=== CHECKING STUB SYSTEM ==="
+        echo "MOZC AAR file:"
+        ls -la libs/mozc-release.aar || echo "MOZC AAR not found"
+        if [ -f "libs/mozc-release.aar" ]; then
+          echo "MOZC AAR size: $(stat -c%s libs/mozc-release.aar) bytes"
+        fi
+        
+        echo "VAD AAR file:"
+        ls -la libs/vad-release.aar || echo "VAD AAR not found"
+        if [ -f "libs/vad-release.aar" ]; then
+          echo "VAD AAR size: $(stat -c%s libs/vad-release.aar) bytes"
+        fi
+        
+        echo "Checking stub files:"
+        ls -la java/src/org/futo/inputmethod/engine/general/JapaneseIMEStub.kt || echo "JapaneseIMEStub not found"
+        ls -la java/src/org/futo/inputmethod/latin/uix/actions/VoiceInputActionStub.kt || echo "VoiceInputActionStub not found"
+        
         # First try a simple compile task to see if basic compilation works
         echo "=== Testing basic compilation ==="
-        if ./gradlew compilePlaystoreDebugKotlin --no-daemon --info 2>&1 | tee compile.log; then
+        if ./gradlew compilePlaystoreDebugKotlin --no-daemon --info --stacktrace 2>&1 | tee compile.log; then
           echo "Basic Kotlin compilation succeeded"
         else
           echo "Basic Kotlin compilation failed"
@@ -197,12 +215,16 @@ jobs:
           tail -100 compile.log | grep -A 10 -B 5 "error:" || echo "No specific compilation errors found"
           echo "=== KOTLIN ERRORS ==="
           tail -100 compile.log | grep -A 10 -B 5 "Kotlin" || echo "No Kotlin-specific errors found"
+          echo "=== IMPORT ERRORS ==="
+          tail -100 compile.log | grep -A 5 -B 5 "import.*error" || echo "No import errors found"
+          echo "=== UNRESOLVED REFERENCE ERRORS ==="
+          tail -100 compile.log | grep -A 5 -B 5 "Unresolved reference" || echo "No unresolved reference errors found"
           exit 1
         fi
         
         # If basic compilation works, try full build
         echo "=== Full APK Build ==="
-        if ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --info --max-workers=2 2>&1 | tee build.log; then
+        if ./gradlew assemblePlaystoreDebug --no-daemon --info --stacktrace 2>&1 | tee build.log; then
           echo "Build command completed successfully"
         else
           echo "Build command failed with exit code $?"
@@ -214,16 +236,6 @@ jobs:
           grep -i "failed" build.log | head -20 || echo "No 'failed' patterns found"
           grep -i "exception" build.log | head -20 || echo "No 'exception' patterns found"
           exit 1
-        fi
-        
-        echo "Build completed. Checking for specific errors..."
-        if [ -f build.log ]; then
-          echo "=== COMPILATION ERRORS ==="
-          grep -A 10 -B 5 "error:" build.log || echo "No specific compilation errors found in log"
-          echo "=== KOTLIN ERRORS ==="
-          grep -A 10 -B 5 "Kotlin" build.log || echo "No Kotlin-specific errors found"
-          echo "=== IMPORT ERRORS ==="
-          grep -A 5 -B 5 "import" build.log | grep -i error || echo "No import errors found"
         fi
       
     - name: Verify Build Output
