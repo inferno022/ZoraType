@@ -1,11 +1,8 @@
 name: ZoraText Android Build
 
 on:
-  release:
-    types: [published]
   push:
     branches: [ master ]
-    tags: [ 'v*' ]
   pull_request:
     branches: [ master ]
   workflow_dispatch:
@@ -13,11 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
-    
-    strategy:
-      matrix:
-        build-type: [debug, release]
+    timeout-minutes: 30
     
     steps:
     - name: Checkout
@@ -48,7 +41,7 @@ jobs:
     - name: Create Required Files
       run: |
         echo "storeFile=java/shared.keystore" > keystore.properties
-        echo "keyAlias=debug" >> keystore.properties
+        echo "keyAlias=androiddebugkey" >> keystore.properties
         echo "keyPassword=android" >> keystore.properties
         echo "storePassword=android" >> keystore.properties
         echo "acraEnabled=false" > crashreporting.properties
@@ -58,139 +51,27 @@ jobs:
         
     - name: Set Environment Variables
       run: |
-        echo "VERSION_NAME=2.0.0" >> $GITHUB_ENV
-        echo "VERSION_CODE=20" >> $GITHUB_ENV
+        echo "VERSION_NAME=0.1.0" >> $GITHUB_ENV
+        echo "VERSION_CODE=1" >> $GITHUB_ENV
         echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
         
     - name: Make Gradlew Executable
       run: chmod +x gradlew
       
-    - name: Show Build Variants
-      run: |
-        echo "Available build variants:"
-        ./gradlew tasks --all | grep -i assemble | head -10
-        echo "Default build variant:"
-        ./gradlew properties | grep -i default || echo "No default found"
-      
-    - name: Run Tests
-      run: ./gradlew testDebugUnitTest --no-daemon --stacktrace
-      
     - name: Build Debug APK
-      if: matrix.build-type == 'debug'
       run: |
         echo "Building Debug APK..."
-        echo "Java version:"
-        java -version
-        echo "Gradle version:"
-        ./gradlew --version
-        echo "Starting build..."
-        ./gradlew assembleDebug --no-daemon --stacktrace --info --warning-mode all
-      
-    - name: Build Release APK
-      if: matrix.build-type == 'release'
-      run: |
-        echo "Building Debug APK (Release configuration)..."
-        echo "Java version:"
-        java -version
-        echo "Gradle version:"
-        ./gradlew --version
-        echo "Starting build..."
-        ./gradlew assembleDebug --no-daemon --stacktrace --info --warning-mode all
+        ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --info
       
     - name: Verify Build Output
       run: |
-        if [ "${{ matrix.build-type }}" == "debug" ]; then
-          ls -la build/outputs/apk/playstore/debug/
-          file build/outputs/apk/playstore/debug/*.apk
-          APK_SIZE=$(stat -c%s build/outputs/apk/playstore/debug/*.apk)
-          echo "Debug APK Size: $(($APK_SIZE / 1024 / 1024)) MB"
-        else
-          ls -la build/outputs/apk/playstore/debug/
-          file build/outputs/apk/playstore/debug/*.apk
-          APK_SIZE=$(stat -c%s build/outputs/apk/playstore/debug/*.apk)
-          echo "Release APK Size: $(($APK_SIZE / 1024 / 1024)) MB"
-        fi
+        ls -la build/outputs/apk/playstore/debug/
+        APK_SIZE=$(stat -c%s build/outputs/apk/playstore/debug/*.apk)
+        echo "Debug APK Size: $(($APK_SIZE / 1024 / 1024)) MB"
         
-    - name: Upload Debug APK
-      if: matrix.build-type == 'debug' && github.event_name == 'release'
-      uses: softprops/action-gh-release@v1
-      with:
-        files: build/outputs/apk/playstore/debug/*.apk
-        name: "ZoraText ${{ github.event.release.tag_name }} - System Font Integration (Debug)"
-        
-    - name: Upload Release APK
-      if: matrix.build-type == 'release' && github.event_name == 'release'
-      uses: softprops/action-gh-release@v1
-      with:
-        files: build/outputs/apk/playstore/debug/*.apk
-        name: "ZoraText ${{ github.event.release.tag_name }} - System Font Integration"
-        body: |
-          # ZoraText Professional Edition v2.0.0
-          
-          ## System-Wide Font Customization
-          
-          This release introduces comprehensive system-wide font customization capabilities across Android applications without requiring root access.
-          
-          ## Key Features
-          
-          ### Font Management System
-          - System-wide font application across Android applications
-          - Integration with manufacturer-specific theme engines
-          - Accessibility service overlay for universal device compatibility
-          - Google Fonts API integration with extensive font library
-          - Custom font file import functionality
-          
-          ### Supported Devices
-          - **Samsung Galaxy**: Samsung Theme Engine integration
-          - **Xiaomi/MIUI**: MIUI Theme System compatibility
-          - **Huawei/Honor**: EMUI Theme System support
-          - **OPPO/Realme**: ColorOS Theme System integration
-          - **Vivo/iQOO**: FuntouchOS Theme compatibility
-          - **OnePlus**: OxygenOS Theme System support
-          - **Generic Android 8.0+**: Accessibility service overlay
-          
-          ### Technical Improvements
-          - Optimized application size: 80MB (reduced from 200MB)
-          - Enhanced font rendering engine
-          - Improved theme system with Material Design 3 compliance
-          - Advanced typography features with proper kerning
-          - Comprehensive error handling and fallback mechanisms
-          
-          ### Font Collection
-          - Professional typeface selection
-          - Google Fonts integration with 1000+ options
-          - Custom font package management
-          - Real-time font preview system
-          
-          ## Installation Requirements
-          - Android 8.0+ (API level 26+)
-          - 80MB available storage space
-          - Internet connection for Google Fonts downloads
-          - Accessibility service permission for universal font overlay
-          
-          ## Installation Instructions
-          1. Download APK from release assets
-          2. Install on Android device
-          3. Enable ZoraText in system keyboard settings
-          4. Configure accessibility permissions if required
-          5. Access font settings through application interface
-          
-          ## Technical Architecture
-          - Multi-method font application system
-          - OEM-specific API integration
-          - Universal accessibility service implementation
-          - Automatic device detection and method selection
-          
-          Built with comprehensive testing and optimization for production deployment.
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Upload Build Artifacts
-      if: always()
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: apk-${{ matrix.build-type }}-${{ github.run_number }}
-        path: |
-          build/outputs/apk/playstore/debug/*.apk
-          build/outputs/apk/playstore/debug/output-metadata.json
+        name: zoratext-debug-apk
+        path: build/outputs/apk/playstore/debug/*.apk
         retention-days: 30

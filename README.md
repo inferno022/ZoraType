@@ -1,4 +1,4 @@
-# ZoraText - Advanced Android Keyboard
+# ZoraText - Advanced Android Keyboard v0.1.0
 
 [![Android Build](https://github.com/inferno022/ZoraType/actions/workflows/android-ci.yml/badge.svg)](https://github.com/inferno022/ZoraType/actions/workflows/android-ci.yml)
 [![CI](https://github.com/inferno022/ZoraType/actions/workflows/ci.yml/badge.svg)](https://github.com/inferno022/ZoraType/actions/workflows/ci.yml)

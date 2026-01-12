@@ -48,8 +48,8 @@ def getVersionName = { ->
         }
         return stdout.toString().trim()
     } catch (ignored) {
-        project.logger.lifecycle("Failed to get version name tag from git! Using default 2.0.0.")
-        return "2.0.0"
+        project.logger.lifecycle("Failed to get version name tag from git! Using default 0.1.0.")
+        return "0.1.0"
     }
 }
 
