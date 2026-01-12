@@ -70,10 +70,16 @@ android {
             
             // Exclude problematic source files if VAD AAR dependency is missing
             def hasVad = file('../libs/vad-release.aar').exists() && file('../libs/vad-release.aar').length() > 10000
+            
+            println "VAD AAR exists: ${file('../libs/vad-release.aar').exists()}, size: ${file('../libs/vad-release.aar').exists() ? file('../libs/vad-release.aar').length() : 0}"
+            println "Using VAD in voiceinput-shared: $hasVad"
+            
             if (!hasVad) {
+                println "Excluding VAD-dependent files and including stubs in voiceinput-shared"
                 java.exclude '**/AudioRecognizer.kt'
                 java.exclude '**/VoiceInput*.kt'
             } else {
+                println "Including VAD-dependent files and excluding stubs in voiceinput-shared"
                 java.exclude '**/AudioRecognizerStub.kt'
             }
         }

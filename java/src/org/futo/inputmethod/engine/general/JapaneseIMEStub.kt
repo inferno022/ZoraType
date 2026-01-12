@@ -1,5 +1,6 @@
 package org.futo.inputmethod.engine.general
 
+import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import org.futo.inputmethod.engine.IMEHelper
 import org.futo.inputmethod.engine.IMEInterface
@@ -7,6 +8,10 @@ import org.futo.inputmethod.latin.R
 import org.futo.inputmethod.latin.uix.SettingsKey
 import org.futo.inputmethod.latin.uix.settings.UserSettingsMenu
 import org.futo.inputmethod.latin.uix.settings.userSettingToggleDataStore
+import java.io.File
+
+// Stub function when MOZC AAR is not available
+fun mozcUserProfileDir(context: Context): File = File(context.applicationInfo.dataDir, ".mozc")
 
 // Stub implementation when MOZC AAR is not available
 object JapaneseIMESettings {

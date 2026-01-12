@@ -2,12 +2,8 @@ package org.futo.inputmethod.latin.uix
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
-
-// Stub function when MOZC AAR is not available
-fun mozcUserProfileDir(context: Context): File = File(context.applicationInfo.dataDir, ".mozc")
 
 // Stub object when MOZC AAR is not available
 object SettingsExporter {
