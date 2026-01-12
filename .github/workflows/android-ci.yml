@@ -187,7 +187,21 @@ jobs:
         ./gradlew tasks --all | grep -i assemble || echo "Could not list assemble tasks"
         echo "Starting build with detailed logging..."
         
-        # Run the build and capture both success and failure
+        # First try a simple compile task to see if basic compilation works
+        echo "=== Testing basic compilation ==="
+        if ./gradlew compilePlaystoreDebugKotlin --no-daemon --info 2>&1 | tee compile.log; then
+          echo "Basic Kotlin compilation succeeded"
+        else
+          echo "Basic Kotlin compilation failed"
+          echo "=== COMPILATION ERRORS ==="
+          tail -100 compile.log | grep -A 10 -B 5 "error:" || echo "No specific compilation errors found"
+          echo "=== KOTLIN ERRORS ==="
+          tail -100 compile.log | grep -A 10 -B 5 "Kotlin" || echo "No Kotlin-specific errors found"
+          exit 1
+        fi
+        
+        # If basic compilation works, try full build
+        echo "=== Full APK Build ==="
         if ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --info --max-workers=2 2>&1 | tee build.log; then
           echo "Build command completed successfully"
         else
