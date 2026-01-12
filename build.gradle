@@ -362,12 +362,32 @@ android {
             java.srcDirs = ['common/src', 'java/src']
             manifest.srcFile 'java/AndroidManifest.xml'
             assets.srcDirs = ['java/assets']
+            
+            // Exclude problematic source files if AAR dependencies are missing
+            def hasMozc = file('libs/mozc-release.aar').exists() && file('libs/mozc-release.aar').length() > 100000
+            if (!hasMozc) {
+                java.exclude '**/JapaneseIME.kt'
+                java.exclude '**/PersonalDictionaryJa.kt'
+                java.exclude '**/SettingsExporter.kt'
+                java.exclude '**/VoiceInputAction.kt'
+                java.exclude '**/VoiceInput.kt'
+            }
         }
 
         playstore {
             java.srcDirs = ['common/src', 'java/src', 'java/playstore/java']
             res.srcDirs = ['java/res-bundle']
             manifest.srcFile 'java/playstore/AndroidManifest.xml'
+            
+            // Exclude problematic source files if AAR dependencies are missing
+            def hasMozc = file('libs/mozc-release.aar').exists() && file('libs/mozc-release.aar').length() > 100000
+            if (!hasMozc) {
+                java.exclude '**/JapaneseIME.kt'
+                java.exclude '**/PersonalDictionaryJa.kt'
+                java.exclude '**/SettingsExporter.kt'
+                java.exclude '**/VoiceInputAction.kt'
+                java.exclude '**/VoiceInput.kt'
+            }
         }
 
         androidTest {

@@ -67,6 +67,13 @@ android {
     sourceSets {
         main {
             res.srcDirs = ['../voiceinput-shared/src/main/res', translationsWithoutEngValues('../translations/voiceinput')]
+            
+            // Exclude problematic source files if VAD AAR dependency is missing
+            def hasVad = file('../libs/vad-release.aar').exists() && file('../libs/vad-release.aar').length() > 10000
+            if (!hasVad) {
+                java.exclude '**/AudioRecognizer.kt'
+                java.exclude '**/VoiceInput*.kt'
+            }
         }
     }
 
