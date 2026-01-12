@@ -36,7 +36,7 @@ jobs:
       uses: android-actions/setup-android@v3
       
     - name: Cache Gradle dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.gradle/caches
@@ -166,7 +166,7 @@ jobs:
         
     - name: Upload Build Artifacts
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: apk-${{ matrix.build-type }}-${{ github.run_number }}
         path: |
