@@ -73,6 +73,8 @@ android {
             if (!hasVad) {
                 java.exclude '**/AudioRecognizer.kt'
                 java.exclude '**/VoiceInput*.kt'
+            } else {
+                java.exclude '**/AudioRecognizerStub.kt'
             }
         }
     }

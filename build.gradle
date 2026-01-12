@@ -365,12 +365,22 @@ android {
             
             // Exclude problematic source files if AAR dependencies are missing
             def hasMozc = file('libs/mozc-release.aar').exists() && file('libs/mozc-release.aar').length() > 100000
+            def hasVad = file('libs/vad-release.aar').exists() && file('libs/vad-release.aar').length() > 10000
             if (!hasMozc) {
-                java.exclude '**/JapaneseIME.kt'
-                java.exclude '**/PersonalDictionaryJa.kt'
+                java.exclude '**/engine/general/JapaneseIME.kt'
+                java.exclude '**/settings/pages/pdict/PersonalDictionaryJa.kt'
                 java.exclude '**/SettingsExporter.kt'
-                java.exclude '**/VoiceInputAction.kt'
-                java.exclude '**/VoiceInput.kt'
+            } else {
+                java.exclude '**/engine/general/JapaneseIMEStub.kt'
+                java.exclude '**/settings/pages/pdict/PersonalDictionaryJaStub.kt'
+                java.exclude '**/SettingsExporterStub.kt'
+            }
+            if (!hasVad) {
+                java.exclude '**/actions/VoiceInputAction.kt'
+                java.exclude '**/settings/pages/VoiceInput.kt'
+            } else {
+                java.exclude '**/actions/VoiceInputActionStub.kt'
+                java.exclude '**/settings/pages/VoiceInputStub.kt'
             }
         }
 
@@ -381,12 +391,22 @@ android {
             
             // Exclude problematic source files if AAR dependencies are missing
             def hasMozc = file('libs/mozc-release.aar').exists() && file('libs/mozc-release.aar').length() > 100000
+            def hasVad = file('libs/vad-release.aar').exists() && file('libs/vad-release.aar').length() > 10000
             if (!hasMozc) {
-                java.exclude '**/JapaneseIME.kt'
-                java.exclude '**/PersonalDictionaryJa.kt'
+                java.exclude '**/engine/general/JapaneseIME.kt'
+                java.exclude '**/settings/pages/pdict/PersonalDictionaryJa.kt'
                 java.exclude '**/SettingsExporter.kt'
-                java.exclude '**/VoiceInputAction.kt'
-                java.exclude '**/VoiceInput.kt'
+            } else {
+                java.exclude '**/engine/general/JapaneseIMEStub.kt'
+                java.exclude '**/settings/pages/pdict/PersonalDictionaryJaStub.kt'
+                java.exclude '**/SettingsExporterStub.kt'
+            }
+            if (!hasVad) {
+                java.exclude '**/actions/VoiceInputAction.kt'
+                java.exclude '**/settings/pages/VoiceInput.kt'
+            } else {
+                java.exclude '**/actions/VoiceInputActionStub.kt'
+                java.exclude '**/settings/pages/VoiceInputStub.kt'
             }
         }
 

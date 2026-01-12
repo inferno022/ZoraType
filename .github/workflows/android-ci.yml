@@ -188,7 +188,7 @@ jobs:
         echo "Starting build with detailed logging..."
         
         # Run the build and capture both success and failure
-        if ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --debug --max-workers=2 2>&1 | tee build.log; then
+        if ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --info --max-workers=2 2>&1 | tee build.log; then
           echo "Build command completed successfully"
         else
           echo "Build command failed with exit code $?"
