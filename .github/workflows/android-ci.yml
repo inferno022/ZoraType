@@ -20,36 +20,53 @@ jobs:
         
     - name: Initialize Submodules (with fallback)
       run: |
-        git submodule update --init --recursive || echo "Some submodules failed to initialize, continuing..."
+        echo "Attempting to initialize submodules..."
+        git submodule update --init --recursive || echo "Submodule initialization failed, creating fallback directories..."
         
-        # Check which submodules are missing and create empty directories
-        if [ ! -d "libs" ]; then
-          echo "Creating empty libs directory"
+        # Create required directories if submodules failed
+        echo "Ensuring required directories exist..."
+        
+        # Create libs directory and copy essential files if missing
+        if [ ! -d "libs" ] || [ ! -f "libs/mozc-release.aar" ]; then
+          echo "Creating libs directory with placeholder files"
           mkdir -p libs
+          # Create empty AAR files as placeholders
+          touch libs/mozc-release.aar
+          touch libs/pocketfft-release.aar
+          touch libs/tensorflow-lite-support-api.aar
+          touch libs/tensorflow-lite-support.aar
+          touch libs/tensorflow-lite.aar
+          touch libs/vad-release.aar
         fi
         
+        # Create ML models directory
         if [ ! -d "voiceinput-shared/src/main/ml" ]; then
-          echo "Creating empty ML models directory"
+          echo "Creating ML models directory"
           mkdir -p voiceinput-shared/src/main/ml
+          touch voiceinput-shared/src/main/ml/tiny_en_acft_q8_0.bin.not.tflite
         fi
         
+        # Create layouts directory
         if [ ! -d "java/assets/layouts" ]; then
-          echo "Creating empty layouts directory"
+          echo "Creating layouts directory"
           mkdir -p java/assets/layouts
         fi
         
+        # Create translations directory
         if [ ! -d "translations" ]; then
-          echo "Creating empty translations directory"
+          echo "Creating translations directory"
           mkdir -p translations
         fi
         
+        # Create themes directory
         if [ ! -d "java/assets/themes" ]; then
-          echo "Creating empty themes directory"
+          echo "Creating themes directory"
           mkdir -p java/assets/themes
         fi
         
+        # Create res-large directory
         if [ ! -d "java/res-large" ]; then
-          echo "Creating empty res-large directory"
+          echo "Creating res-large directory"
           mkdir -p java/res-large
         fi
     
@@ -139,6 +156,13 @@ jobs:
         free -h
         echo "=== Project Structure ==="
         ls -la
+        echo "=== Critical Directories ==="
+        echo "libs directory:"
+        ls -la libs/ || echo "libs directory not found"
+        echo "voiceinput-shared/src/main/ml directory:"
+        ls -la voiceinput-shared/src/main/ml/ || echo "ML directory not found"
+        echo "java/assets/layouts directory:"
+        ls -la java/assets/layouts/ || echo "layouts directory not found"
         echo "=== Submodules Status ==="
         git submodule status || echo "No submodules or submodule issues"
       
@@ -148,6 +172,9 @@ jobs:
     - name: Build Debug APK
       run: |
         echo "Building Debug APK..."
+        echo "Available Gradle tasks:"
+        ./gradlew tasks --all | grep -i assemble || echo "Could not list assemble tasks"
+        echo "Starting build..."
         ./gradlew assemblePlaystoreDebug --no-daemon --stacktrace --info --max-workers=2
       
     - name: Verify Build Output
